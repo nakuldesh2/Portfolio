@@ -1,0 +1,24 @@
+{
+  "name": "nakul-ai-portfolio",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "AI-powered portfolio showcasing projects and experience",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && gh-pages -d dist"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.0.7",
+    "tailwindcss": "^3.3.6",
+    "postcss": "^8.4.31",
+    "autoprefixer": "^10.4.16",
+    "gh-pages": "^6.1.0"
+  }
+}
