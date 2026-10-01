@@ -42,7 +42,18 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
     steps:
+      - name: Configure GitHub Pages source
+        run: |
+          apt-get update && apt-get install -y gh
+          gh repo edit ${{ github.repository }} --enable-pages --pages-source=gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
