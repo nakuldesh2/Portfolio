@@ -37,17 +37,15 @@ jobs:
           # (It's only used at runtime in browser)
           CI: false
 
-      # Step 5: Upload and Deploy to GitHub Pages
+      # Step 5: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-
-          # Create fresh gh-pages branch from scratch
-          git checkout --orphan gh-pages-new
-          git reset --hard
-          git clean -fxd
-          cp -r dist/* .
-          git add -A
-          git commit -m "Deploy: portfolio build $(date)"
-          git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages-new:gh-pages --force
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          cd dist
+          git init --quiet
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git add .
+          git commit --quiet -m "Deploy $(date)" --allow-empty
+          git push --force --quiet https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:gh-pages
