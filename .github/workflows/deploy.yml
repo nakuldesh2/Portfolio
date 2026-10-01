@@ -31,6 +31,13 @@ jobs:
       - name: Add .nojekyll to dist
         run: touch ./dist/.nojekyll
 
+      - name: Enable and Configure GitHub Pages
+        run: |
+          # Enable GitHub Pages and set source to gh-pages branch
+          gh repo edit ${{ github.repository }} --enable-pages --pages-source=gh-pages || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
