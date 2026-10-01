@@ -41,17 +41,21 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            await github.rest.repos.createPagesSite({
-              owner: 'nakuldesh2',
-              repo: 'Portfolio',
-              source: {
-                branch: 'gh-pages',
-                path: '/'
-              }
-            }).catch(err => {
-              // If site already exists, update it
-              if (err.status === 409) {
-                return github.rest.repos.updateInformationAboutPagesSite({
+            try {
+              // Try to update existing Pages site
+              await github.rest.repos.updateInformationAboutPagesSite({
+                owner: 'nakuldesh2',
+                repo: 'Portfolio',
+                source: {
+                  branch: 'gh-pages',
+                  path: '/'
+                }
+              });
+              console.log('Updated existing Pages site');
+            } catch (err) {
+              // If update failed (404), create new Pages site
+              if (err.status === 404) {
+                await github.rest.repos.createPagesSite({
                   owner: 'nakuldesh2',
                   repo: 'Portfolio',
                   source: {
@@ -59,6 +63,8 @@ jobs:
                     path: '/'
                   }
                 });
+                console.log('Created new Pages site');
+              } else {
+                throw err;
               }
-              throw err;
-            });
+            }
