@@ -38,3 +38,13 @@ jobs:
           publish_dir: ./dist
           force_orphan: true
           enable_jekyll: false
+
+      - name: Enable GitHub Pages (API)
+        run: |
+          echo "Enabling GitHub Pages..."
+          curl -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/nakuldesh2/Portfolio/pages \
+            -d '{"source":{"branch":"gh-pages","path":"/"},"build_type":"workflow"}' || true
+          echo "Pages configuration request sent"
