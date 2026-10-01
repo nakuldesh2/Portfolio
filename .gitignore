@@ -3,7 +3,7 @@ node_modules/
 package-lock.json
 yarn.lock
 
-# Build
+# Build (but keep docs folder)
 dist/
 build/
 *.tsbuildinfo
