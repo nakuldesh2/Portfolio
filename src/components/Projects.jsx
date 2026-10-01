@@ -1,10 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { projects } from '../data/projects'
 import { architectures } from '../data/architectures'
 import ArchitectureDiagram from './ArchitectureDiagram'
 
 function Projects() {
   const [selectedProject, setSelectedProject] = useState(null)
+
+  // ESC key to close modal
+  useEffect(() => {
+    const handleEscapeKey = (e) => {
+      if (e.key === 'Escape') {
+        setSelectedProject(null)
+      }
+    }
+
+    if (selectedProject) {
+      window.addEventListener('keydown', handleEscapeKey)
+      return () => window.removeEventListener('keydown', handleEscapeKey)
+    }
+  }, [selectedProject])
 
   return (
     <section id="projects" className="py-20">
@@ -67,19 +81,27 @@ function Projects() {
         </div>
 
         {selectedProject && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 overflow-y-auto">
-            <div className="bg-dark-800 rounded-lg max-w-4xl w-full border border-gray-700 my-8">
-              <div className="sticky top-0 flex justify-between items-center p-6 border-b border-gray-700 bg-dark-800">
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setSelectedProject(null)
+              }
+            }}
+          >
+            <div className="bg-dark-800 rounded-lg w-full h-full max-w-6xl max-h-screen border border-gray-700 flex flex-col">
+              <div className="sticky top-0 flex justify-between items-center p-6 border-b border-gray-700 bg-dark-800 flex-shrink-0">
                 <h2 className="text-2xl font-bold text-white">{selectedProject.title}</h2>
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="text-gray-400 hover:text-white text-2xl"
+                  className="text-gray-400 hover:text-white text-3xl font-bold"
+                  title="Close (ESC)"
                 >
                   ✕
                 </button>
               </div>
 
-              <div className="p-6 space-y-6 max-h-96 overflow-y-auto">
+              <div className="p-6 space-y-6 overflow-y-auto flex-1">
                 <div>
                   <h3 className="text-cyan-400 font-bold mb-2">Challenge</h3>
                   <p className="text-gray-300">{selectedProject.challenge}</p>
