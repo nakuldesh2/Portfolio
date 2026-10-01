@@ -42,10 +42,12 @@ jobs:
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-          git fetch origin main
-          git checkout gh-pages 2>/dev/null || git checkout --orphan gh-pages
-          git rm -rf . 2>/dev/null || true
+
+          # Create fresh gh-pages branch from scratch
+          git checkout --orphan gh-pages-new
+          git reset --hard
+          git clean -fxd
           cp -r dist/* .
           git add -A
-          git commit -m "Deploy $(date)" || echo "No changes"
-          git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages --force
+          git commit -m "Deploy: portfolio build $(date)"
+          git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages-new:gh-pages --force
