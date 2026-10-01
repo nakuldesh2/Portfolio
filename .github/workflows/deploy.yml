@@ -9,6 +9,13 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
 
     steps:
       # Step 1: Checkout code from repository
@@ -35,16 +42,12 @@ jobs:
           # (It's only used at runtime in browser)
           CI: false
 
-      # Step 5: Deploy to GitHub Pages
+      # Step 5: Upload and Deploy to GitHub Pages
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
       - name: Deploy to GitHub Pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          cd dist
-          git init --initial-branch=gh-pages
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
-          git add .
-          git commit -m "Deploy portfolio: $(date)"
-          git remote add origin "https://oauth2:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
-          git push -u origin gh-pages --force
+        id: deployment
+        uses: actions/deploy-pages@v4
