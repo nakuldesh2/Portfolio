@@ -38,36 +38,3 @@ jobs:
           publish_dir: ./dist
           force_orphan: true
           enable_jekyll: false
-
-      - name: Update Pages settings via API
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            try {
-              console.log('Updating Pages settings to use gh-pages branch...');
-              const response = await github.rest.repos.updateInformationAboutPagesSite({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                source: {
-                  branch: 'gh-pages',
-                  path: '/'
-                }
-              });
-              console.log('Pages updated successfully:', response.status);
-            } catch (err) {
-              if (err.status === 404) {
-                console.log('Creating new Pages site...');
-                await github.rest.repos.createPagesSite({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  source: {
-                    branch: 'gh-pages',
-                    path: '/'
-                  }
-                });
-                console.log('Pages site created');
-              } else {
-                throw err;
-              }
-            }
