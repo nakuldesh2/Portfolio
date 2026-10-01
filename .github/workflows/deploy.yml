@@ -1,44 +1,39 @@
 name: Deploy Portfolio to GitHub Pages
 
-# Trigger deployment when we push to main branch
 on:
   push:
-    branches: [main, master, claude/github-portfolio-project-opbvb5]
-  workflow_dispatch:  # Allow manual trigger
+    branches: [main, master]
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-      # Step 1: Checkout code from repository
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # Step 2: Setup Node.js environment
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: '20'
 
-      # Step 3: Install dependencies
       - name: Install dependencies
-        run: npm ci
+        run: npm install --legacy-peer-deps
 
-      # Step 4: Build the React app
       - name: Build portfolio
         run: npm run build
         env:
-          # Groq API key not needed for build
-          # (It's only used at runtime in browser)
           CI: false
 
-      # Step 5: Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          cname: # Uncomment and add custom domain if you have one
-          # cname: nakuldeshpande.com
+      - name: Update docs folder and deploy
+        run: |
+          rm -rf docs
+          cp -r dist docs
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git add docs/
+          git commit -m "Deploy: update portfolio $(date)" || echo "No changes"
+          git push
