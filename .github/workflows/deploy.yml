@@ -37,15 +37,13 @@ jobs:
           # (It's only used at runtime in browser)
           CI: false
 
-      # Step 5: Deploy to GitHub Pages
+      # Step 5: Deploy to GitHub Pages (docs folder)
       - name: Deploy to GitHub Pages
         run: |
+          rm -rf docs
+          cp -r dist docs
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          cd dist
-          git init --quiet
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
-          git add .
-          git commit --quiet -m "Deploy $(date)" --allow-empty
-          git push --force --quiet https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:gh-pages
+          git add docs/
+          git commit -m "Deploy: update docs folder $(date)" || echo "No changes to commit"
+          git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
