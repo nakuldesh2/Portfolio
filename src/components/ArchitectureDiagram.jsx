@@ -4,8 +4,10 @@
  * with hover effects, tooltips, and data flow animations
  */
 
+import { useState } from 'react'
+
 function ArchitectureDiagram({ diagram }) {
-  const [hoveredNode, setHoveredNode] = null
+  const [hoveredNode, setHoveredNode] = useState(null)
 
   if (!diagram) return null
 
