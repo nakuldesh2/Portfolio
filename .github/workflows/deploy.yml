@@ -34,3 +34,12 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           force_orphan: true
+          cname: false
+
+      - name: Configure Pages Source
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          apt-get update && apt-get install -y gh
+          gh repo edit nakuldesh2/Portfolio --enable-pages --pages-source=gh-pages
+        continue-on-error: true
