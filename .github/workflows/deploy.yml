@@ -5,16 +5,16 @@ on:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -31,29 +31,43 @@ jobs:
       - name: Add .nojekyll to dist
         run: touch ./dist/.nojekyll
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          path: './dist'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          force_orphan: true
+          enable_jekyll: false
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    permissions:
-      contents: write
-      pages: write
-      id-token: write
-    steps:
-      - name: Configure GitHub Pages source
-        run: |
-          apt-get update && apt-get install -y gh
-          gh repo edit ${{ github.repository }} --enable-pages --pages-source=gh-pages
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Update Pages settings via API
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            try {
+              console.log('Updating Pages settings to use gh-pages branch...');
+              const response = await github.rest.repos.updateInformationAboutPagesSite({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                source: {
+                  branch: 'gh-pages',
+                  path: '/'
+                }
+              });
+              console.log('Pages updated successfully:', response.status);
+            } catch (err) {
+              if (err.status === 404) {
+                console.log('Creating new Pages site...');
+                await github.rest.repos.createPagesSite({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  source: {
+                    branch: 'gh-pages',
+                    path: '/'
+                  }
+                });
+                console.log('Pages site created');
+              } else {
+                throw err;
+              }
+            }
