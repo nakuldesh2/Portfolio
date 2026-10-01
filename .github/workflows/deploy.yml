@@ -19,8 +19,7 @@ jobs:
       # Step 2: Setup Node.js environment
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: '20'
 
       # Step 3: Install dependencies
       - name: Install dependencies
