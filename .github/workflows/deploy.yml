@@ -37,11 +37,14 @@ jobs:
 
       # Step 5: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd dist
-          git init
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
+          git init --initial-branch=gh-pages
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
           git add .
-          git commit -m "Deploy: $(date)"
-          git push -f https://${{ github.token }}@github.com/${{ github.repository }}.git HEAD:gh-pages
+          git commit -m "Deploy portfolio: $(date)"
+          git remote add origin "https://oauth2:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
+          git push -u origin gh-pages --force
