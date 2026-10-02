@@ -22,7 +22,7 @@ function ArchitectureDiagram({ diagram }) {
       >
         {/* Draw connections/arrows first (so they appear behind nodes) */}
         {diagram.connections?.map((conn, idx) => (
-          <g key={`conn-${idx}`} className="animate-pulse-slow">
+          <g key={`conn-${idx}`} style={{ animation: 'pulse-slow 3s ease-in-out infinite' }}>
             <defs>
               <marker
                 id={`arrowhead-${idx}`}
@@ -83,7 +83,7 @@ function ArchitectureDiagram({ diagram }) {
                 stroke={hoveredNode === idx ? '#3B82F6' : '#4B5563'}
                 strokeWidth={hoveredNode === idx ? '3' : '2'}
                 rx="8"
-                className="transition animate-fade-in"
+                style={{ animation: 'fadeInUp 0.6s ease-out' }}
               />
             ) : node.type === 'circle' ? (
               <circle
@@ -93,7 +93,7 @@ function ArchitectureDiagram({ diagram }) {
                 fill={node.color || '#1F2937'}
                 stroke={hoveredNode === idx ? '#3B82F6' : '#4B5563'}
                 strokeWidth={hoveredNode === idx ? '3' : '2'}
-                className="transition animate-fade-in"
+                style={{ animation: 'fadeInUp 0.6s ease-out' }}
               />
             ) : null}
 
