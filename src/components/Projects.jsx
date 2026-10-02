@@ -67,9 +67,15 @@ function Projects() {
         </div>
 
         {selectedProject && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 overflow-y-auto">
-            <div className="bg-dark-800 rounded-lg max-w-4xl w-full border border-gray-700 my-8">
-              <div className="sticky top-0 flex justify-between items-center p-6 border-b border-gray-700 bg-dark-800">
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+            onClick={() => setSelectedProject(null)}
+          >
+            <div
+              className="bg-dark-800 rounded-lg w-full max-h-screen h-screen md:h-auto md:max-h-screen md:max-w-5xl border border-gray-700 flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="sticky top-0 flex justify-between items-center p-6 border-b border-gray-700 bg-dark-800 z-10">
                 <h2 className="text-2xl font-bold text-white">{selectedProject.title}</h2>
                 <button
                   onClick={() => setSelectedProject(null)}
@@ -79,7 +85,7 @@ function Projects() {
                 </button>
               </div>
 
-              <div className="p-6 space-y-6 max-h-96 overflow-y-auto">
+              <div className="p-6 space-y-6 overflow-y-auto flex-1">
                 <div>
                   <h3 className="text-cyan-400 font-bold mb-2">Challenge</h3>
                   <p className="text-gray-300">{selectedProject.challenge}</p>
