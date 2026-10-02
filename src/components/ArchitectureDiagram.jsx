@@ -11,26 +11,19 @@ function ArchitectureDiagram({ diagram }) {
 
   if (!diagram) return null
 
-  // Gradient definitions for visual depth
-  const gradients = {
-    blue: 'url(#gradientBlue)',
-    purple: 'url(#gradientPurple)',
-    pink: 'url(#gradientPink)',
-    amber: 'url(#gradientAmber)',
-    emerald: 'url(#gradientEmerald)',
-    cyan: 'url(#gradientCyan)',
-    indigo: 'url(#gradientIndigo)',
+  // Map colors to gradient IDs
+  const colorToGradient = {
+    '#3B82F6': 'gradientBlue',
+    '#8B5CF6': 'gradientPurple',
+    '#EC4899': 'gradientPink',
+    '#F59E0B': 'gradientAmber',
+    '#10B981': 'gradientEmerald',
+    '#06B6D4': 'gradientCyan',
+    '#6366F1': 'gradientIndigo',
   }
 
-  const getGradientUrl = (color) => {
-    if (color.includes('3B82F6')) return gradients.blue
-    if (color.includes('8B5CF6')) return gradients.purple
-    if (color.includes('EC4899')) return gradients.pink
-    if (color.includes('F59E0B')) return gradients.amber
-    if (color.includes('10B981')) return gradients.emerald
-    if (color.includes('06B6D4')) return gradients.cyan
-    if (color.includes('6366F1')) return gradients.indigo
-    return gradients.blue
+  const getGradientId = (color) => {
+    return colorToGradient[color] || 'gradientBlue'
   }
 
   return (
@@ -178,7 +171,7 @@ function ArchitectureDiagram({ diagram }) {
                 y={node.y}
                 width={node.width}
                 height={node.height}
-                fill={getGradientUrl(node.color)}
+                fill={`url(#${getGradientId(node.color)})`}
                 stroke={hoveredNode === idx ? '#60A5FA' : '#4B5563'}
                 strokeWidth={hoveredNode === idx ? '3' : '2'}
                 rx="8"
@@ -190,7 +183,7 @@ function ArchitectureDiagram({ diagram }) {
                 cx={node.x + node.width / 2}
                 cy={node.y + node.height / 2}
                 r={node.width / 2}
-                fill={getGradientUrl(node.color)}
+                fill={`url(#${getGradientId(node.color)})`}
                 stroke={hoveredNode === idx ? '#60A5FA' : '#4B5563'}
                 strokeWidth={hoveredNode === idx ? '3' : '2'}
                 filter={`url(#shadow-${idx})`}
