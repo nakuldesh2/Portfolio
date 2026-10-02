@@ -11,21 +11,6 @@ function ArchitectureDiagram({ diagram }) {
 
   if (!diagram) return null
 
-  // Map colors to gradient IDs
-  const colorToGradient = {
-    '#3B82F6': 'gradientBlue',
-    '#8B5CF6': 'gradientPurple',
-    '#EC4899': 'gradientPink',
-    '#F59E0B': 'gradientAmber',
-    '#10B981': 'gradientEmerald',
-    '#06B6D4': 'gradientCyan',
-    '#6366F1': 'gradientIndigo',
-  }
-
-  const getGradientId = (color) => {
-    return colorToGradient[color] || 'gradientBlue'
-  }
-
   return (
     <div className="mt-6 bg-dark-700 p-6 rounded-lg border border-gray-700">
       <h3 className="text-cyan-400 font-bold mb-4">System Architecture</h3>
@@ -35,76 +20,25 @@ function ArchitectureDiagram({ diagram }) {
         className="w-full border border-gray-600 rounded bg-dark-800"
         style={{ minHeight: '450px' }}
       >
-        {/* Define gradients for all colors */}
+        {/* Draw connections/arrows first (so they appear behind nodes) */}
         <defs>
-          <linearGradient id="gradientBlue" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#3B82F6" stopOpacity="1" />
-            <stop offset="100%" stopColor="#1E40AF" stopOpacity="1" />
-          </linearGradient>
-          <linearGradient id="gradientPurple" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#8B5CF6" stopOpacity="1" />
-            <stop offset="100%" stopColor="#5B21B6" stopOpacity="1" />
-          </linearGradient>
-          <linearGradient id="gradientPink" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#EC4899" stopOpacity="1" />
-            <stop offset="100%" stopColor="#9D174D" stopOpacity="1" />
-          </linearGradient>
-          <linearGradient id="gradientAmber" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#F59E0B" stopOpacity="1" />
-            <stop offset="100%" stopColor="#B45309" stopOpacity="1" />
-          </linearGradient>
-          <linearGradient id="gradientEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#10B981" stopOpacity="1" />
-            <stop offset="100%" stopColor="#065F46" stopOpacity="1" />
-          </linearGradient>
-          <linearGradient id="gradientCyan" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#06B6D4" stopOpacity="1" />
-            <stop offset="100%" stopColor="#0C4A6E" stopOpacity="1" />
-          </linearGradient>
-          <linearGradient id="gradientIndigo" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#6366F1" stopOpacity="1" />
-            <stop offset="100%" stopColor="#3730A3" stopOpacity="1" />
-          </linearGradient>
+          <marker
+            id="arrowhead"
+            markerWidth="12"
+            markerHeight="12"
+            refX="10"
+            refY="4"
+            orient="auto"
+          >
+            <polygon points="0 0, 12 4, 0 8" fill="#06B6D4" />
+          </marker>
           <style>{`
-            @keyframes pulse-animation {
-              0%, 100% { opacity: 1; }
-              50% { opacity: 0.6; }
-            }
-            @keyframes flow-animation {
-              0% { stroke-dashoffset: 10; }
-              100% { stroke-dashoffset: 0; }
-            }
-            @keyframes scale-animation {
-              0%, 100% { transform: scale(1); }
-              50% { transform: scale(1.05); }
-            }
-            .animated-connection {
-              animation: pulse-animation 2s ease-in-out infinite;
-            }
-            .flow-arrow {
-              animation: flow-animation 2s linear infinite;
-            }
-            .pulse-node {
-              animation: pulse-animation 3s ease-in-out infinite;
-            }
+            .animated-line { animation: pulse 2s ease-in-out infinite; }
+            @keyframes pulse { 0%, 100% { opacity: 0.8; } 50% { opacity: 0.4; } }
           `}</style>
         </defs>
-        {/* Draw connections/arrows first (so they appear behind nodes) */}
         {diagram.connections?.map((conn, idx) => (
           <g key={`conn-${idx}`}>
-            <defs>
-              <marker
-                id={`arrowhead-${idx}`}
-                markerWidth="12"
-                markerHeight="12"
-                refX="10"
-                refY="4"
-                orient="auto"
-              >
-                <polygon points="0 0, 12 4, 0 8" fill="#06B6D4" />
-              </marker>
-            </defs>
-            {/* Animated connection line */}
             <line
               x1={conn.x1}
               y1={conn.y1}
@@ -112,12 +46,10 @@ function ArchitectureDiagram({ diagram }) {
               y2={conn.y2}
               stroke="#06B6D4"
               strokeWidth="2.5"
-              markerEnd={`url(#arrowhead-${idx})`}
+              markerEnd="url(#arrowhead)"
               strokeDasharray={conn.dashed ? "6,4" : "0"}
-              className="animated-connection"
-              opacity="0.8"
+              className="animated-line"
             />
-            {/* Connection label with background for readability */}
             {conn.label && (
               <>
                 <rect
@@ -136,7 +68,7 @@ function ArchitectureDiagram({ diagram }) {
                   fontSize="11"
                   fontWeight="bold"
                   textAnchor="middle"
-                  className="pointer-events-none"
+                  pointerEvents="none"
                 >
                   {conn.label}
                 </text>
@@ -157,37 +89,26 @@ function ArchitectureDiagram({ diagram }) {
               transition: 'opacity 0.2s ease',
             }}
           >
-            {/* Shadow effect */}
-            <defs>
-              <filter id={`shadow-${idx}`} x="-50%" y="-50%" width="200%" height="200%">
-                <feDropShadow dx="2" dy="2" stdDeviation="3" floodOpacity="0.3" />
-              </filter>
-            </defs>
-
-            {/* Node background with gradient */}
+            {/* Node background */}
             {node.type === 'box' ? (
               <rect
                 x={node.x}
                 y={node.y}
                 width={node.width}
                 height={node.height}
-                fill={`url(#${getGradientId(node.color)})`}
+                fill={node.color || '#3B82F6'}
                 stroke={hoveredNode === idx ? '#60A5FA' : '#4B5563'}
                 strokeWidth={hoveredNode === idx ? '3' : '2'}
                 rx="8"
-                filter={`url(#shadow-${idx})`}
-                className="pulse-node"
               />
             ) : node.type === 'circle' ? (
               <circle
                 cx={node.x + node.width / 2}
                 cy={node.y + node.height / 2}
                 r={node.width / 2}
-                fill={`url(#${getGradientId(node.color)})`}
+                fill={node.color || '#3B82F6'}
                 stroke={hoveredNode === idx ? '#60A5FA' : '#4B5563'}
                 strokeWidth={hoveredNode === idx ? '3' : '2'}
-                filter={`url(#shadow-${idx})`}
-                className="pulse-node"
               />
             ) : null}
 
