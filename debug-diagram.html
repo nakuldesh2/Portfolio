@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Debug Architecture Diagram</title>
+  <style>
+    body { font-family: monospace; background: #1f2937; color: #fff; padding: 20px; }
+    .test { margin: 20px 0; padding: 10px; background: #111827; border-left: 3px solid #06B6D4; }
+    .good { border-left-color: #10B981; }
+    .bad { border-left-color: #EF4444; }
+    svg { border: 1px solid #4b5563; margin-top: 10px; }
+    rect { stroke-width: 2; }
+  </style>
+</head>
+<body>
+  <h1>Architecture Diagram Debug Test</h1>
+
+  <div class="test">
+    <h2>Test 1: SVG with Direct Fill</h2>
+    <svg width="400" height="100" viewBox="0 0 400 100">
+      <rect x="10" y="10" width="80" height="80" fill="#3B82F6" stroke="#4B5563" stroke-width="2" rx="8"/>
+      <text x="50" y="60" text-anchor="middle" fill="#FFFFFF" font-weight="bold">Node 1</text>
+    </svg>
+    <p>✓ Expected: Blue box with white text</p>
+  </div>
+
+  <div class="test">
+    <h2>Test 2: SVG with CSS Fill (should NOT work)</h2>
+    <svg width="400" height="100" viewBox="0 0 400 100">
+      <style>
+        .my-rect { fill: #8B5CF6; }
+      </style>
+      <rect class="my-rect" x="10" y="10" width="80" height="80" stroke="#4B5563" stroke-width="2" rx="8"/>
+      <text x="50" y="60" text-anchor="middle" fill="#FFFFFF" font-weight="bold">Node 2</text>
+    </svg>
+    <p>❌ Expected: Purple box (CSS styles don't work inline in SVG in React)</p>
+  </div>
+
+  <div class="test">
+    <h2>Test 3: SVG with Animated Stroke (pulsing line)</h2>
+    <svg width="400" height="100" viewBox="0 0 400 100">
+      <defs>
+        <style>{`
+          .animated-line { animation: pulse 2s ease-in-out infinite; }
+          @keyframes pulse { 0%, 100% { opacity: 0.8; } 50% { opacity: 0.4; } }
+        `}</style>
+      </defs>
+      <line x1="10" y1="50" x2="390" y2="50" stroke="#06B6D4" stroke-width="2.5" class="animated-line" />
+      <text x="200" y="30" text-anchor="middle" fill="#06B6D4" font-size="12">Data Flow (should pulse)</text>
+    </svg>
+    <p>⚠️ Animation should pulse the line (may not work in static HTML)</p>
+  </div>
+
+  <div class="test good">
+    <h2>The Issue:</h2>
+    <p>React SVG should use inline attributes like fill={color}, not CSS classes.</p>
+    <p>Our ArchitectureDiagram.jsx uses: <code>fill={node.color || '#3B82F6'}</code></p>
+    <p>This should work! The color should appear in the HTML.</p>
+  </div>
+
+  <div class="test">
+    <h2>Test 4: Check if colors from data appear</h2>
+    <p id="color-test">Colors from architectures.js:</p>
+  </div>
+
+  <script>
+    // Simulate fetching the architecture colors
+    const colors = [
+      '#8B5A3C', // Legacy SWF
+      '#3B82F6', // ORCA
+      '#10B981', // Scrutinizer
+      '#F59E0B', // Multiple Scanners
+      '#8B5CF6', // Shadow Mode
+      '#EC4899', // Gradual Rollout
+    ];
+
+    const testDiv = document.getElementById('color-test');
+    colors.forEach(color => {
+      const swatch = document.createElement('div');
+      swatch.style.display = 'inline-block';
+      swatch.style.width = '20px';
+      swatch.style.height = '20px';
+      swatch.style.backgroundColor = color;
+      swatch.style.borderRadius = '3px';
+      swatch.style.marginRight = '5px';
+      swatch.style.verticalAlign = 'middle';
+      swatch.title = color;
+      testDiv.appendChild(swatch);
+    });
+
+    const status = document.createElement('p');
+    status.style.marginTop = '20px';
+    status.innerHTML = '<strong>✓ If you see colored boxes above, colors can render in HTML.</strong>';
+    testDiv.appendChild(status);
+  </script>
+</body>
+</html>

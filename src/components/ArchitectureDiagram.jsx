@@ -9,7 +9,17 @@ import { useState } from 'react'
 function ArchitectureDiagram({ diagram }) {
   const [hoveredNode, setHoveredNode] = useState(null)
 
-  if (!diagram) return null
+  if (!diagram) {
+    console.warn('ArchitectureDiagram: No diagram data provided')
+    return null
+  }
+
+  console.log('ArchitectureDiagram rendering:', {
+    title: diagram.title,
+    nodeCount: diagram.nodes?.length,
+    firstNodeColor: diagram.nodes?.[0]?.color,
+    allNodeColors: diagram.nodes?.map(n => ({ label: n.label, color: n.color }))
+  })
 
   return (
     <div className="mt-6 bg-dark-700 p-6 rounded-lg border border-gray-700">
@@ -89,8 +99,8 @@ function ArchitectureDiagram({ diagram }) {
               transition: 'opacity 0.2s ease',
             }}
           >
-            {/* Node background */}
-            {node.type === 'box' ? (
+            {/* Node background - default to 'box' if type not specified */}
+            {(node.type || 'box') === 'box' ? (
               <rect
                 x={node.x}
                 y={node.y}
@@ -101,7 +111,7 @@ function ArchitectureDiagram({ diagram }) {
                 strokeWidth={hoveredNode === idx ? '3' : '2'}
                 rx="8"
               />
-            ) : node.type === 'circle' ? (
+            ) : (node.type || 'box') === 'circle' ? (
               <circle
                 cx={node.x + node.width / 2}
                 cy={node.y + node.height / 2}
