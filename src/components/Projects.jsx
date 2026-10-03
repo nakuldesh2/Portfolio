@@ -94,7 +94,10 @@ function Projects() {
 
                 {/* Architecture Diagram */}
                 {architectures[selectedProject.id] && (
-                  <ArchitectureDiagram diagram={architectures[selectedProject.id]} />
+                  <ArchitectureDiagram
+                    diagram={architectures[selectedProject.id]}
+                    projectId={selectedProject.id}
+                  />
                 )}
 
                 <div>
