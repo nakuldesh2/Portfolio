@@ -1,0 +1,64 @@
+<svg viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title { font-size: 28px; font-weight: bold; fill: #ffffff; }
+    .subtitle { font-size: 14px; fill: #06B6D4; }
+    .section-title { font-size: 13px; font-weight: bold; fill: #06B6D4; }
+    .label { font-size: 12px; font-weight: bold; fill: #ffffff; }
+    .text { font-size: 11px; fill: #ffffff; }
+    .box { stroke: #4B5563; stroke-width: 2; rx: 6; }
+  </style>
+  <rect width="1400" height="700" fill="#111827"/>
+  <text x="700" y="40" class="title" text-anchor="middle">DAS → CAS Compatibility Layer</text>
+  <text x="700" y="60" class="subtitle" text-anchor="middle">Bridge legacy DAS content platform to modern CAS infrastructure</text>
+  
+  <!-- Main Flow -->
+  <rect x="60" y="100" width="130" height="90" fill="#8B5A3C" class="box"/><text x="125" y="135" class="label" text-anchor="middle">Legacy</text><text x="125" y="155" class="label" text-anchor="middle">DAS</text><text x="125" y="175" class="text" text-anchor="middle">Deprecated</text>
+  <path d="M 190 145 L 250 145" stroke="#06B6D4" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <rect x="250" y="100" width="130" height="90" fill="#3B82F6" class="box"/><text x="315" y="130" class="label" text-anchor="middle">Compatibility</text><text x="315" y="150" class="label" text-anchor="middle">Layer</text><text x="315" y="170" class="text" text-anchor="middle">Transform</text>
+  <path d="M 380 145 L 440 145" stroke="#06B6D4" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <rect x="440" y="100" width="130" height="90" fill="#8B5CF6" class="box"/><text x="505" y="135" class="label" text-anchor="middle">CAS Format</text><text x="505" y="155" class="label" text-anchor="middle">Conversion</text><text x="505" y="175" class="text" text-anchor="middle">Reformat</text>
+  <path d="M 570 145 L 630 145" stroke="#06B6D4" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <rect x="630" y="100" width="130" height="90" fill="#10B981" class="box"/><text x="695" y="135" class="label" text-anchor="middle">CAS</text><text x="695" y="155" class="label" text-anchor="middle">Platform</text><text x="695" y="175" class="text" text-anchor="middle">Modern</text>
+  
+  <!-- Details -->
+  <g>
+    <rect x="50" y="250" width="1300" height="410" fill="#1F2937" class="box" stroke="#06B6D4"/>
+    <text x="700" y="280" class="section-title" text-anchor="middle">Compatibility Layer Architecture</text>
+    
+    <rect x="70" y="300" width="400" height="150" fill="#0F172A" stroke="#3B82F6" stroke-width="1.5" rx="4"/>
+    <text x="270" y="325" class="section-title" text-anchor="middle">Schema Mapping</text>
+    <text x="80" y="350" class="text">✓ DAS Metadata → CAS Schema</text>
+    <text x="80" y="368" class="text">  Field-by-field mapping rules</text>
+    <text x="80" y="386" class="text">✓ Type Conversion</text>
+    <text x="80" y="404" class="text">  Legacy types → CAS types</text>
+    <text x="80" y="422" class="text">✓ Data Preservation</text>
+    <text x="80" y="440" class="text">  Integrity checks during conversion</text>
+    
+    <rect x="510" y="300" width="400" height="150" fill="#0F172A" stroke="#EC4899" stroke-width="1.5" rx="4"/>
+    <text x="710" y="325" class="section-title" text-anchor="middle">API Compatibility</text>
+    <text x="520" y="350" class="text">✓ DAS API Interceptor</text>
+    <text x="520" y="368" class="text">  Legacy clients continue working</text>
+    <text x="520" y="386" class="text">✓ Request Translation</text>
+    <text x="520" y="404" class="text">  DAS API calls → CAS API calls</text>
+    <text x="520" y="422" class="text">✓ Response Mapping</text>
+    <text x="520" y="440" class="text">  CAS responses → DAS format</text>
+    
+    <rect x="950" y="300" width="380" height="150" fill="#0F172A" stroke="#F59E0B" stroke-width="1.5" rx="4"/>
+    <text x="1140" y="325" class="section-title" text-anchor="middle">Migration Support</text>
+    <text x="960" y="350" class="text">✓ Backward Compatibility</text>
+    <text x="960" y="368" class="text">  Existing DAS clients unaffected</text>
+    <text x="960" y="386" class="text">✓ Gradual Transition</text>
+    <text x="960" y="404" class="text">  Allows phased client migration</text>
+    <text x="960" y="422" class="text">✓ Audit Trail</text>
+    <text x="960" y="440" class="text">  Track all converted content</text>
+    
+    <rect x="70" y="480" width="1260" height="150" fill="#0F172A" stroke="#10B981" stroke-width="1.5" rx="4"/>
+    <text x="700" y="505" class="section-title" text-anchor="middle">Key Benefits</text>
+    <text x="80" y="530" class="text">No Forced Client Upgrade: Legacy DAS clients continue working through compatibility layer without modification.</text>
+    <text x="80" y="548" class="text">Data Preservation: Full content fidelity maintained during conversion. No loss of metadata or attributes.</text>
+    <text x="80" y="566" class="text">Transparent Migration: Clients unaware of platform change. Works seamlessly across old and new systems.</text>
+    <text x="80" y="584" class="text">Phased Adoption: Clients migrate to CAS APIs at their own pace. Flexibility in transition timeline.</text>
+  </g>
+  
+  <defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><polygon points="0 0, 12 6, 0 12" fill="#06B6D4"/></marker></defs>
+</svg>
