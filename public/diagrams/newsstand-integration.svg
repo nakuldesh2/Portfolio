@@ -1,37 +1,66 @@
-<svg viewBox="0 0 1200 550" xmlns="http://www.w3.org/2000/svg">
-  <text x="600" y="30" font-size="24" font-weight="bold" text-anchor="middle" fill="#ffffff">Newsstand Integration Platform</text>
-  <text x="600" y="55" font-size="14" text-anchor="middle" fill="#06B6D4">Real-time content distribution to digital newsstand</text>
+<svg viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title { font-size: 28px; font-weight: bold; fill: #ffffff; }
+    .subtitle { font-size: 14px; fill: #06B6D4; }
+    .section-title { font-size: 13px; font-weight: bold; fill: #06B6D4; }
+    .label { font-size: 12px; font-weight: bold; fill: #ffffff; }
+    .text { font-size: 11px; fill: #ffffff; }
+    .box { stroke: #4B5563; stroke-width: 2; rx: 6; }
+  </style>
+  <rect width="1400" height="700" fill="#111827"/>
+  <text x="700" y="40" class="title" text-anchor="middle">Newsstand Integration Platform</text>
+  <text x="700" y="60" class="subtitle" text-anchor="middle">Real-time content distribution to digital newsstand with high-throughput processing</text>
   
-  <g><rect x="50" y="100" width="120" height="80" fill="#3B82F6" stroke="#4B5563" stroke-width="2" rx="8"/><text x="110" y="135" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">Content</text><text x="110" y="155" font-size="10" text-anchor="middle" fill="#ffffff">Publishers</text></g>
-  <path d="M 170 140 L 230 140" stroke="#06B6D4" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <!-- Main Flow -->
+  <rect x="50" y="100" width="120" height="80" fill="#3B82F6" class="box"/><text x="110" y="135" class="label" text-anchor="middle">Content</text><text x="110" y="155" class="text" text-anchor="middle">Publishers</text>
+  <path d="M 170 140 L 230 140" stroke="#06B6D4" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <rect x="230" y="100" width="120" height="80" fill="#8B5CF6" class="box"/><text x="290" y="135" class="label" text-anchor="middle">Content</text><text x="290" y="155" class="text" text-anchor="middle">Ingestion</text>
+  <path d="M 350 140 L 410 140" stroke="#06B6D4" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <rect x="410" y="100" width="120" height="80" fill="#EC4899" class="box"/><text x="470" y="135" class="label" text-anchor="middle">Processing</text><text x="470" y="155" class="text" text-anchor="middle">Pipeline</text>
+  <path d="M 530 140 L 590 140" stroke="#06B6D4" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <rect x="590" y="100" width="120" height="80" fill="#F59E0B" class="box"/><text x="650" y="135" class="label" text-anchor="middle">Distribution</text><text x="650" y="155" class="text" text-anchor="middle">Queue</text>
+  <path d="M 710 140 L 770 140" stroke="#06B6D4" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <rect x="770" y="100" width="120" height="80" fill="#10B981" class="box"/><text x="830" y="135" class="label" text-anchor="middle">Newsstand</text><text x="830" y="155" class="text" text-anchor="middle">Platform</text>
+  <path d="M 890 140 L 950 140" stroke="#06B6D4" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <rect x="950" y="100" width="120" height="80" fill="#06B6D4" class="box"/><text x="1010" y="135" class="label" text-anchor="middle">End</text><text x="1010" y="155" class="text" text-anchor="middle">Users</text>
   
-  <g><rect x="230" y="100" width="120" height="80" fill="#8B5CF6" stroke="#4B5563" stroke-width="2" rx="8"/><text x="290" y="135" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">Content</text><text x="290" y="155" font-size="10" text-anchor="middle" fill="#ffffff">Ingestion</text></g>
-  <path d="M 350 140 L 410 140" stroke="#06B6D4" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  
-  <g><rect x="410" y="100" width="120" height="80" fill="#EC4899" stroke="#4B5563" stroke-width="2" rx="8"/><text x="470" y="135" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">Processing</text><text x="470" y="155" font-size="10" text-anchor="middle" fill="#ffffff">Pipeline</text></g>
-  <path d="M 530 140 L 590 140" stroke="#06B6D4" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  
-  <g><rect x="590" y="100" width="120" height="80" fill="#F59E0B" stroke="#4B5563" stroke-width="2" rx="8"/><text x="650" y="135" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">Distribution</text><text x="650" y="155" font-size="10" text-anchor="middle" fill="#ffffff">Queue</text></g>
-  <path d="M 710 140 L 770 140" stroke="#06B6D4" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  
-  <g><rect x="770" y="100" width="120" height="80" fill="#10B981" stroke="#4B5563" stroke-width="2" rx="8"/><text x="830" y="135" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">Newsstand</text><text x="830" y="155" font-size="10" text-anchor="middle" fill="#ffffff">Platform</text></g>
-  <path d="M 890 140 L 950 140" stroke="#06B6D4" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  
-  <g><rect x="950" y="100" width="120" height="80" fill="#06B6D4" stroke="#4B5563" stroke-width="2" rx="8"/><text x="1010" y="135" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">End Users</text><text x="1010" y="155" font-size="10" text-anchor="middle" fill="#ffffff">Apps</text></g>
-  
-  <g><rect x="50" y="250" width="1020" height="260" fill="#1F2937" stroke="#06B6D4" stroke-width="2" rx="8"/><text x="560" y="275" font-size="13" font-weight="bold" text-anchor="middle" fill="#06B6D4">Real-Time Content Distribution Architecture</text>
-    <text x="70" y="310" font-size="11" font-weight="bold" fill="#06B6D4">Content Ingestion</text>
-    <text x="80" y="328" font-size="10" fill="#ffffff">• Publishers upload content to secure content ingestion platform</text>
-    <text x="80" y="343" font-size="10" fill="#ffffff">• Automated metadata extraction and validation</text>
+  <!-- Details -->
+  <g>
+    <rect x="50" y="240" width="1300" height="420" fill="#1F2937" class="box" stroke="#06B6D4"/>
+    <text x="700" y="270" class="section-title" text-anchor="middle">Real-Time Content Distribution Architecture</text>
     
-    <text x="70" y="370" font-size="11" font-weight="bold" fill="#06B6D4">Processing & Optimization</text>
-    <text x="80" y="388" font-size="10" fill="#ffffff">• Image optimization, format conversion for multiple devices</text>
-    <text x="80" y="403" font-size="10" fill="#ffffff">• Content enrichment with metadata and relationships</text>
+    <rect x="70" y="290" width="400" height="140" fill="#0F172A" stroke="#3B82F6" stroke-width="1.5" rx="4"/>
+    <text x="270" y="315" class="section-title" text-anchor="middle">Content Ingestion</text>
+    <text x="80" y="340" class="text">✓ Publishers upload content</text>
+    <text x="80" y="358" class="text">✓ Metadata extraction automated</text>
+    <text x="80" y="376" class="text">✓ Validation gates ensure quality</text>
+    <text x="80" y="394" class="text">✓ Supported formats: images, video, text</text>
+    <text x="80" y="412" class="text">✓ Rate limiting protects infrastructure</text>
     
-    <text x="70" y="430" font-size="11" font-weight="bold" fill="#06B6D4">Distribution</text>
-    <text x="80" y="448" font-size="10" fill="#ffffff">• Queue-based delivery ensures reliable distribution</text>
-    <text x="80" y="463" font-size="10" fill="#ffffff">• Multi-region deployment for low latency</text>
-    <text x="80" y="478" font-size="10" fill="#ffffff">• Real-time updates push to user apps</text></g>
+    <rect x="510" y="290" width="400" height="140" fill="#0F172A" stroke="#EC4899" stroke-width="1.5" rx="4"/>
+    <text x="710" y="315" class="section-title" text-anchor="middle">Processing & Optimization</text>
+    <text x="520" y="340" class="text">✓ Image optimization multi-format</text>
+    <text x="520" y="358" class="text">✓ Video transcoding for device types</text>
+    <text x="520" y="376" class="text">✓ CDN edge cache preparation</text>
+    <text x="520" y="394" class="text">✓ Metadata enrichment pipeline</text>
+    <text x="520" y="412" class="text">✓ Content relationship mapping</text>
+    
+    <rect x="950" y="290" width="380" height="140" fill="#0F172A" stroke="#F59E0B" stroke-width="1.5" rx="4"/>
+    <text x="1140" y="315" class="section-title" text-anchor="middle">Distribution & Delivery</text>
+    <text x="960" y="340" class="text">✓ Queue-based reliability</text>
+    <text x="960" y="358" class="text">✓ Multi-region deployment</text>
+    <text x="960" y="376" class="text">✓ Push updates to client apps</text>
+    <text x="960" y="394" class="text">✓ Real-time notifications</text>
+    <text x="960" y="412" class="text">✓ Analytics tracking</text>
+    
+    <rect x="70" y="460" width="1260" height="180" fill="#0F172A" stroke="#10B981" stroke-width="1.5" rx="4"/>
+    <text x="700" y="485" class="section-title" text-anchor="middle">Key Capabilities & Performance</text>
+    <text x="80" y="510" class="text">High-Throughput Ingestion: Hundreds of content uploads per minute. Horizontal scaling via SQS.</text>
+    <text x="80" y="528" class="text">Low Latency Delivery: Multi-region CDN ensures content reaches users in <100ms globally.</text>
+    <text x="80" y="546" class="text">Automatic Optimization: Images/videos automatically optimized for device type and connection speed.</text>
+    <text x="80" y="564" class="text">Real-Time Updates: Newsstand shows latest content immediately after publisher upload and processing.</text>
+    <text x="80" y="582" class="text">Reliability & Recovery: Queue-based architecture with DLQ ensures no content is lost even under load.</text>
+  </g>
   
-  <defs><marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><polygon points="0 0, 12 6, 0 12" fill="#06B6D4"/></marker></defs>
+  <defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><polygon points="0 0, 12 6, 0 12" fill="#06B6D4"/></marker></defs>
 </svg>
