@@ -1,0 +1,37 @@
+<svg viewBox="0 0 1200 550" xmlns="http://www.w3.org/2000/svg">
+  <text x="600" y="30" font-size="24" font-weight="bold" text-anchor="middle" fill="#ffffff">Synthetic Canary Monitoring</text>
+  <text x="600" y="55" font-size="14" text-anchor="middle" fill="#06B6D4">Real-time health checks simulating customer transactions</text>
+  
+  <g><rect x="50" y="100" width="120" height="80" fill="#3B82F6" stroke="#4B5563" stroke-width="2" rx="8"/><text x="110" y="135" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">Canary</text><text x="110" y="155" font-size="10" text-anchor="middle" fill="#ffffff">Probe</text></g>
+  <path d="M 170 140 L 230 140" stroke="#06B6D4" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <g><rect x="230" y="100" width="120" height="80" fill="#8B5CF6" stroke="#4B5563" stroke-width="2" rx="8"/><text x="290" y="135" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">API Health</text><text x="290" y="155" font-size="10" text-anchor="middle" fill="#ffffff">Check</text></g>
+  <path d="M 350 140 L 410 140" stroke="#06B6D4" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <g><rect x="410" y="100" width="120" height="80" fill="#EC4899" stroke="#4B5563" stroke-width="2" rx="8"/><text x="470" y="135" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">Database</text><text x="470" y="155" font-size="10" text-anchor="middle" fill="#ffffff">Query</text></g>
+  <path d="M 530 140 L 590 140" stroke="#06B6D4" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <g><rect x="590" y="100" width="120" height="80" fill="#F59E0B" stroke="#4B5563" stroke-width="2" rx="8"/><text x="650" y="135" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">Response</text><text x="650" y="155" font-size="10" text-anchor="middle" fill="#ffffff">Validation</text></g>
+  <path d="M 710 140 L 770 140" stroke="#06B6D4" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <g><rect x="770" y="100" width="120" height="80" fill="#10B981" stroke="#4B5563" stroke-width="2" rx="8"/><text x="830" y="135" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">CloudWatch</text><text x="830" y="155" font-size="10" text-anchor="middle" fill="#ffffff">Metrics</text></g>
+  <path d="M 890 140 L 950 140" stroke="#06B6D4" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <g><rect x="950" y="100" width="120" height="80" fill="#6366F1" stroke="#4B5563" stroke-width="2" rx="8"/><text x="1010" y="135" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">Alerts &</text><text x="1010" y="155" font-size="10" text-anchor="middle" fill="#ffffff">Dashboards</text></g>
+  
+  <g><rect x="50" y="250" width="1020" height="250" fill="#1F2937" stroke="#06B6D4" stroke-width="2" rx="8"/><text x="560" y="275" font-size="13" font-weight="bold" text-anchor="middle" fill="#06B6D4">Monitoring Strategy & Key Metrics</text>
+    <text x="70" y="310" font-size="11" font-weight="bold" fill="#06B6D4">Continuous Probes</text>
+    <text x="80" y="328" font-size="10" fill="#ffffff">• Every 60 seconds: Run simulated user transaction</text>
+    <text x="80" y="343" font-size="10" fill="#ffffff">• Check API response time, database latency, error rates</text>
+    <text x="80" y="358" font-size="10" fill="#ffffff">• Detect issues before customers report them</text>
+    
+    <text x="70" y="385" font-size="11" font-weight="bold" fill="#06B6D4">Alerting</text>
+    <text x="80" y="403" font-size="10" fill="#ffffff">• P99 latency > 1s → Page duty engineer</text>
+    <text x="80" y="418" font-size="10" fill="#ffffff">• Error rate > 1% → Immediate alert</text>
+    <text x="80" y="433" font-size="10" fill="#ffffff">• Database connection timeout → Critical alert</text>
+    
+    <text x="70" y="460" font-size="11" font-weight="bold" fill="#06B6D4">Benefit</text>
+    <text x="80" y="478" font-size="10" fill="#ffffff">Early warning system catches degradation before SLA breaches</text></g>
+  
+  <defs><marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><polygon points="0 0, 12 6, 0 12" fill="#06B6D4"/></marker></defs>
+</svg>
