@@ -1,0 +1,27 @@
+<svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg">
+  <text x="600" y="30" font-size="24" font-weight="bold" text-anchor="middle" fill="#ffffff">SmartScanner - AI/ML Intelligent Scanner Selection</text>
+  <text x="600" y="55" font-size="14" text-anchor="middle" fill="#06B6D4">ML Model routes files to optimal scanners with 78.5% accuracy</text>
+  
+  <g><rect x="30" y="100" width="140" height="100" fill="#3B82F6" stroke="#4B5563" stroke-width="2" rx="8"/><text x="100" y="130" font-size="14" font-weight="bold" text-anchor="middle" fill="#ffffff">File Upload</text><text x="100" y="150" font-size="11" text-anchor="middle" fill="#ffffff">Customer Asset</text></g>
+  <path d="M 170 150 L 230 150" stroke="#06B6D4" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <g><rect x="230" y="100" width="140" height="100" fill="#8B5CF6" stroke="#4B5563" stroke-width="2" rx="8"/><text x="300" y="130" font-size="14" font-weight="bold" text-anchor="middle" fill="#ffffff">Feature Extraction</text><text x="300" y="170" font-size="10" text-anchor="middle" fill="#ffffff">Size, MIME, Type</text></g>
+  <path d="M 370 150 L 430 150" stroke="#06B6D4" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <g><rect x="430" y="100" width="140" height="100" fill="#EC4899" stroke="#4B5563" stroke-width="2" rx="8"/><text x="500" y="130" font-size="14" font-weight="bold" text-anchor="middle" fill="#ffffff">ML Model</text><text x="500" y="168" font-size="11" text-anchor="middle" fill="#ffffff">78.5% accuracy</text></g>
+  <path d="M 570 150 L 630 150" stroke="#06B6D4" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <g><rect x="630" y="100" width="140" height="100" fill="#F59E0B" stroke="#4B5563" stroke-width="2" rx="8"/><text x="700" y="130" font-size="14" font-weight="bold" text-anchor="middle" fill="#ffffff">Decision Engine</text><text x="700" y="170" font-size="10" text-anchor="middle" fill="#ffffff">Route Decision</text></g>
+  <path d="M 770 150 L 830 150" stroke="#06B6D4" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <g><rect x="830" y="100" width="140" height="100" fill="#10B981" stroke="#4B5563" stroke-width="2" rx="8"/><text x="900" y="130" font-size="14" font-weight="bold" text-anchor="middle" fill="#ffffff">Scanner Execution</text><text x="900" y="170" font-size="10" text-anchor="middle" fill="#ffffff">CLAMAV/CloudOne</text></g>
+  
+  <rect x="30" y="280" width="940" height="100" fill="none" stroke="#06B6D4" stroke-width="2" stroke-dasharray="5,5" rx="8"/>
+  <text x="500" y="305" font-size="13" font-weight="bold" text-anchor="middle" fill="#06B6D4">FEEDBACK LOOP (THE HEART OF AI SYSTEM)</text>
+  <text x="500" y="330" font-size="11" fill="#ffffff">Continuous learning: Decision outcomes feed back to retrain model</text>
+  <text x="500" y="350" font-size="11" fill="#ffffff">Real-world performance data improves model accuracy over time</text>
+  
+  <g><rect x="30" y="450" width="940" height="180" fill="#1F2937" stroke="#06B6D4" stroke-width="2" rx="8"/><text x="500" y="475" font-size="13" font-weight="bold" text-anchor="middle" fill="#06B6D4">Business Impact & Learning Points</text><text x="50" y="505" font-size="11" font-weight="bold" fill="#10B981">✓ 23.4% Performance Improvement</text><text x="60" y="523" font-size="10" fill="#ffffff">Route files to optimal scanner based on characteristics</text><text x="50" y="545" font-size="11" font-weight="bold" fill="#10B981">✓ Feature Engineering</text><text x="60" y="563" font-size="10" fill="#ffffff">Extract meaningful features from raw data (size, MIME, type, extension)</text><text x="50" y="585" font-size="11" font-weight="bold" fill="#10B981">✓ Continuous Learning</text><text x="60" y="603" font-size="10" fill="#ffffff">Model learns from real decisions and scan results to improve accuracy</text></g>
+  
+  <defs><marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><polygon points="0 0, 12 6, 0 12" fill="#06B6D4"/></marker></defs>
+</svg>

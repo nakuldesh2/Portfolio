@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SVG Test</title>
+  <style>
+    body { background: #111827; color: #fff; padding: 20px; font-family: monospace; }
+    .test { margin: 20px 0; padding: 10px; background: #1f2937; border-left: 3px solid #06B6D4; }
+    svg { border: 1px solid #4b5563; margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h1>SVG Rendering Test</h1>
+
+  <div class="test">
+    <h2>Test 1: Direct SVG HTML</h2>
+    <svg viewBox="0 0 1200 150" xmlns="http://www.w3.org/2000/svg" style="width: 100%; max-width: 600px; height: auto;">
+      <text x="600" y="40" font-size="24" font-weight="bold" text-anchor="middle" fill="#ffffff">
+        Tier-1 Malware Scanning Migration
+      </text>
+      <rect x="50" y="60" width="140" height="80" fill="#3B82F6" stroke="#4B5563" stroke-width="2" rx="8"/>
+      <text x="120" y="110" font-size="14" font-weight="bold" text-anchor="middle" fill="#ffffff">Legacy SWF</text>
+    </svg>
+    <p>✓ If you see a title and a blue box above, SVG renders fine in HTML</p>
+  </div>
+
+  <div class="test">
+    <h2>Test 2: Check React dangerouslySetInnerHTML compatibility</h2>
+    <div id="test2"></div>
+    <script>
+      const svgHtml = `<svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg" style="width: 100%; border: 1px solid #4b5563;">
+        <rect x="30" y="30" width="100" height="80" fill="#8B5CF6" stroke="#4B5563" stroke-width="2" rx="8"/>
+        <text x="80" y="80" font-size="14" font-weight="bold" text-anchor="middle" fill="#ffffff">Test Box</text>
+      </svg>`;
+
+      document.getElementById('test2').innerHTML = svgHtml;
+    </script>
+    <p>✓ If you see a purple box above, innerHTML works for SVG</p>
+  </div>
+
+  <div class="test">
+    <h2>Test 3: React Component Equivalent</h2>
+    <p><code>dangerouslySetInnerHTML={{__html: svgString}}</code> should work like innerHTML above</p>
+  </div>
+
+  <div class="test">
+    <h2>Issue Diagnosis:</h2>
+    <p>If SVGs render in tests 1-2 but not in React app, check:</p>
+    <ul>
+      <li>1. projectId prop is being passed correctly</li>
+      <li>2. architectureSvgs[projectId] is returning a string</li>
+      <li>3. SVG container div has proper width/height styling</li>
+      <li>4. React isn't sanitizing the SVG content</li>
+    </ul>
+  </div>
+</body>
+</html>

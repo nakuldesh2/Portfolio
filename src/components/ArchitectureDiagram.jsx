@@ -1,15 +1,15 @@
 /**
  * ArchitectureDiagram Component
- * Renders professional SVG architecture diagrams
+ * Renders professional SVG architecture diagrams from public files
  */
 
-import { architectureSvgs } from '../data/architectureSvgs'
+import { diagramPaths } from '../data/diagramPaths'
 
 function ArchitectureDiagram({ diagram, projectId }) {
-  // Check if we have a professional SVG for this project
-  const svgString = projectId ? architectureSvgs[projectId] : null
+  // Check if we have a diagram file for this project
+  const diagramPath = projectId ? diagramPaths[projectId] : null
 
-  if (!diagram && !svgString) {
+  if (!diagram && !diagramPath) {
     return null
   }
 
@@ -17,13 +17,18 @@ function ArchitectureDiagram({ diagram, projectId }) {
     <div className="mt-6 bg-dark-700 p-6 rounded-lg border border-gray-700">
       <h3 className="text-cyan-400 font-bold mb-4">System Architecture</h3>
 
-      {/* Render professional SVG if available */}
-      {svgString ? (
-        <div className="w-full border border-gray-600 rounded bg-dark-800 p-4 overflow-x-auto">
-          <div dangerouslySetInnerHTML={{ __html: svgString }} />
+      {/* Render professional SVG diagram file if available */}
+      {diagramPath ? (
+        <div className="w-full border border-gray-600 rounded bg-dark-800 p-4 flex items-center justify-center" style={{ minHeight: '500px' }}>
+          <img
+            src={diagramPath}
+            alt="System Architecture"
+            className="w-full h-auto"
+            style={{ maxWidth: '100%' }}
+          />
         </div>
       ) : diagram ? (
-        /* Fallback to simple diagram if no SVG available */
+        /* Fallback to simple diagram if no SVG file available */
         <svg
           viewBox={`0 0 ${diagram.width} ${diagram.height}`}
           className="w-full border border-gray-600 rounded bg-dark-800"
