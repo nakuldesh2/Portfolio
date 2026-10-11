@@ -62,7 +62,7 @@ export default function Experience({ onOpenProject }) {
       <SectionHeader
         eyebrow="Experience"
         title="Where I've worked"
-        subtitle="From supply-chain analytics to petabyte-scale data engineering at AWS. Click any project to watch an animated walkthrough."
+        subtitle="From C++ backend systems and Kafka streaming to cloud data platforms and agentic AI at AWS. Click any project to watch an animated walkthrough."
       />
       <ol className="relative space-y-6 before:absolute before:bottom-2 before:left-[5px] before:top-2 before:w-px before:bg-ink-600">
         {experience.map((r) => (

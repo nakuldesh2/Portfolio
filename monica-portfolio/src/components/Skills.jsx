@@ -6,7 +6,7 @@ const ACCENTS = ['#38bdf8', '#a78bfa', '#34d399', '#fbbf24', '#f472b6']
 export default function Skills() {
   return (
     <section id="skills" className="section">
-      <SectionHeader eyebrow="Skills" title="Toolbox" subtitle="What I use to build reliable data platforms end to end." />
+      <SectionHeader eyebrow="Skills" title="Toolbox" subtitle="What I use to build backend, data and AI systems end to end." />
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {skills.map((s, i) => (
           <div key={s.category} className="card p-5">

@@ -27,14 +27,14 @@ export function buildKnowledgeBase() {
     'Contact',
     `Email: ${profile.email}. GitHub: ${profile.github}.` +
       (profile.linkedin ? ` LinkedIn: ${profile.linkedin}.` : '') +
-      ` Based in ${profile.location}. Open to Software Data Engineer / Data Engineer roles.`,
+      ` Based in ${profile.location}. Seeking roles that apply deep backend and AI integration experience.`,
   )
 
   for (const e of education) {
     add(
       `edu-${e.school}`,
       `Education: ${e.school}`,
-      `${e.degree} from ${e.school} (${e.location}). Coursework: ${e.coursework.join(', ')}.`,
+      `${e.degree} from ${e.school} (${e.location}, ${e.period}). Coursework: ${e.coursework.join(', ')}.`,
     )
   }
 

@@ -10,7 +10,9 @@ export default function Education() {
           <div key={e.school} className="card p-6">
             <div className="flex items-baseline justify-between gap-2">
               <h3 className="text-lg font-semibold text-white">{e.school}</h3>
-              <span className="text-xs text-slate-400">{e.location}</span>
+              <span className="text-xs text-slate-400">
+                {e.period} · {e.location}
+              </span>
             </div>
             <div className="mt-1 text-accent">{e.degree}</div>
             <div className="mt-4 text-xs uppercase tracking-wider text-slate-500">Coursework</div>

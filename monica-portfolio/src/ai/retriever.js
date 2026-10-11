@@ -26,7 +26,7 @@ const SYNONYMS = {
   llm: ['generative', 'ai', 'bedrock', 'rag'],
   etl: ['pipeline', 'pipelines', 'spark'],
   pipeline: ['etl', 'pipelines'],
-  warehouse: ['redshift', 'medallion', 'warehousing'],
+  warehouse: ['redshift', 'medallion', 'warehousing', 'lakehouse'],
   medallion: ['raw', 'curated', 'warehouse'],
   cost: ['savings', 'reduction', 'deletion'],
   save: ['cost', 'savings'],
@@ -38,8 +38,18 @@ const SYNONYMS = {
   failure: ['error', 'incident', 'recovery'],
   challenging: ['incident', 'lse', 'challenge'],
   hardest: ['incident', 'lse', 'challenge'],
-  security: ['malware', 'lake', 'formation', 'encryption', 'permissions'],
-  malware: ['cloudone', 'clamav', 'scanning'],
+  security: ['anonymization', 'cryptopan', 'oauth', 'lake', 'formation', 'governance'],
+  agent: ['agentic', 'mcp', 'llm'],
+  agentic: ['agent', 'mcp', 'llm'],
+  mcp: ['model', 'context', 'protocol', 'agentic'],
+  rag: ['retrieval', 'graph', 'embeddings', 'deepseek'],
+  streaming: ['kafka', 'real-time', 'event-driven'],
+  kafka: ['streaming', 'event-driven', 'real-time'],
+  backend: ['c++', 'java', 'api', 'services', 'microservice'],
+  frontend: ['react', 'angular', 'web'],
+  lakehouse: ['medallion', 'bronze', 'silver', 'gold'],
+  airflow: ['dag', 'orchestration', 'mwaa'],
+  privacy: ['anonymization', 'cryptopan'],
   governance: ['lake', 'formation', 'permissions', 'glue'],
   permissions: ['lake', 'formation', 'governance'],
   monitoring: ['cloudwatch', 'alerts', 'dashboards', 'observability'],
@@ -67,8 +77,6 @@ const SYNONYMS = {
   impact: ['achievements', 'metrics'],
   achievement: ['achievements', 'impact', 'metrics'],
   forecast: ['forecasting', 'statistical'],
-  supply: ['supply-chain', 'bosch'],
-  image: ['tagging', 'labeling'],
   chatbot: ['portfolio', 'rag', 'groq'],
   built: ['portfolio'],
 }
@@ -152,7 +160,7 @@ export function offlineAnswer(question, chunks) {
   if (!chunks.length) {
     return (
       "I couldn't find that in Monica's profile. Try asking about her experience at AWS, a specific project " +
-      '(for example the 17 PB deletion system or the GenAI malware routing), her skills, or her education.'
+      '(for example the medallion lakehouse or the agentic AI design-review platform), her skills, or her education.'
     )
   }
   const lines = chunks.slice(0, 2).map((c) => {

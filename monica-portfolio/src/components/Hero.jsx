@@ -2,9 +2,9 @@ import { profile } from '../data/profile.js'
 
 const SUGGESTED = [
   'What did Monica build at AWS?',
-  'How did she clean up 17 PB of S3 data safely?',
-  'Tell me about her GenAI / ML work',
-  'How does she handle production incidents?',
+  'How did she migrate 22+ datasets to a medallion lakehouse?',
+  'Tell me about her agentic AI and RAG work',
+  'How did she automate Spark job recovery?',
 ]
 
 export default function Hero({ onAsk }) {
@@ -16,7 +16,8 @@ export default function Hero({ onAsk }) {
       </div>
       <h1 className="text-4xl font-extrabold leading-tight text-white sm:text-6xl">
         Hi, I'm <span className="gradient-text">{profile.shortName}</span>.
-        <br />I engineer data platforms that scale.
+        <br />
+        {profile.headline}
       </h1>
       <p className="mt-6 max-w-3xl text-lg leading-relaxed text-slate-300">{profile.tagline}</p>
       <p className="mt-3 max-w-3xl text-sm leading-relaxed text-slate-400">{profile.summary}</p>

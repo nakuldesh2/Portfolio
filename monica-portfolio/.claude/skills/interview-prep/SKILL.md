@@ -13,7 +13,8 @@ Source material: `src/data/profile.js`, `src/data/projects.js`, and `LEARNING.md
 4. Good question sources:
    - Each project's `challenge` → "Tell me about a time…"
    - Each simulation step → "Why did you design it this way? What would break at 10× scale?"
-   - `lse-incident-recovery` → incident/on-call and leadership-under-pressure questions
-   - `asset-deletion` → "How do you make destructive operations safe?"
+   - `medallion-lakehouse` → migration strategy, data quality per layer, cutover, "why EMR Serverless?", "why separate Gold account?"
+   - `spark-auto-recovery` → Spark OOM / shuffle / driver vs executor memory, automation design
+   - `graph-rag` / `agentic-design-review` → RAG evaluation, MCP, when to fine-tune
    - `LEARNING.md` → RAG, BM25 vs embeddings, why a Worker proxy, SSE streaming
 5. Never invent experience for her answers. If a detail is missing, tell her to fill it in from memory.

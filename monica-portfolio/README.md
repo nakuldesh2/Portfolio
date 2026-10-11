@@ -1,6 +1,6 @@
 # Monica Choudhari · AI-Powered Portfolio
 
-An interactive portfolio for a Software Data Engineer, built so hiring managers can:
+An interactive portfolio for a Software Engineer (backend, data platforms, AI), built so hiring managers can:
 
 - **Explore** experience, skills, achievements and education
 - **Watch** every project run as an animated, step-by-step architecture simulation
@@ -118,5 +118,6 @@ This repo is set up as an AI-assisted project. `CLAUDE.md` explains the architec
 
 ## Content status
 
-All 10 projects were drafted **from the resume only** and are marked `reviewed: false`.
+`medallion-lakehouse` and `spark-auto-recovery` are built from Monica's own project notes (internal codenames replaced with generic terms).
+The other 8 are drafted from resume bullets. All are marked `reviewed: false` until Monica confirms them.
 `npm run check` lists them. Review each one (architecture, wording, metrics), then set `reviewed: true`.

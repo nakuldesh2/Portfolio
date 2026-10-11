@@ -28,7 +28,7 @@ for (const p of projects) {
   for (const f of ['approach', 'impact', 'tech']) {
     if (!Array.isArray(p[f]) || !p[f].length) err(where, `"${f}" must be a non-empty array`)
   }
-  if (p.reviewed === false) warnings.push(`• ${p.id}: drafted from the resume; awaiting Monica's review`)
+  if (p.reviewed === false) warnings.push(`• ${p.id}: not yet confirmed by Monica (reviewed: false)`)
 
   const sim = p.simulation
   if (!sim) {
@@ -76,16 +76,18 @@ for (const e of experience)
 // Retrieval sanity checks: [question, id the top-3 results must include]
 const retrieve = createRetriever(buildKnowledgeBase())
 const EXPECT = [
-  ['How did she delete 17 PB of data?', 'project-asset-deletion'],
-  ['Tell me about the malware scanning work', 'project-genai-malware-routing'],
-  ['What is medallion architecture?', 'project-medallion-warehouse'],
+  ['What is medallion architecture?', 'project-medallion-lakehouse'],
+  ['How did she build the Airflow DAG generator?', 'project-medallion-lakehouse'],
+  ['Tell me about the agentic AI and MCP work', 'project-agentic-design-review'],
+  ['How did she reach 98% retrieval accuracy?', 'project-graph-rag'],
+  ['How did she automate Spark out of memory recovery?', 'project-spark-auto-recovery'],
+  ['Kafka streaming experience', 'project-kafka-feed-platform'],
+  ['IP anonymization CryptoPAN', 'project-cryptopan-anonymization'],
   ['Where did she study?', 'edu-Northeastern University'],
-  ['How does she handle outages and on-call?', 'project-lse-incident-recovery'],
-  ['What did she do at Bosch?', 'exp-Bosch-Data Analyst'],
-  ['Lake Formation permissions', 'project-lake-formation-migration'],
+  ['What did she do at Bosch?', 'exp-Bosch-Backend Engineer'],
   ['How can I contact her?', 'contact'],
   ['What cloud services does she know?', 'skills-Cloud Services'],
-  ['internship spark error recovery', 'project-spark-auto-recovery'],
+  ['React and Angular modernization', 'project-plm-modernization'],
 ]
 for (const [q, expected] of EXPECT) {
   const got = retrieve(q, 3).map((c) => c.id)
