@@ -14,10 +14,20 @@ Everything runs on free tiers: GitHub Pages (hosting), GitHub Actions (CI/CD), C
 
 ## Quick start
 
+> ⚠️ Monica's site lives in the **`monica-portfolio/` folder**. The repository root is Nakul's portfolio,
+> so running `npm run dev` from the root shows Nakul's site. Always `cd monica-portfolio` first.
+
 ```bash
+git clone https://github.com/nakuldesh2/Portfolio.git
+cd Portfolio
+git checkout claude/stoic-pascal-trin0t   # until PR #1 is merged; after that, main works too
+cd monica-portfolio                       # ← important
 npm install
-npm run dev        # http://localhost:5173
+npm run dev                               # open http://localhost:5173
 ```
+
+If you already have the repo cloned: `git fetch && git checkout claude/stoic-pascal-trin0t && cd monica-portfolio`.
+If a server is still running from the root (Nakul's site), stop it with Ctrl+C first. Otherwise Vite moves to port 5174 and 5173 keeps showing Nakul's site.
 
 The AI assistant works immediately in **offline mode**: it searches the portfolio data and answers from it.
 Turn on **live AI** with the Worker setup below.
@@ -35,9 +45,11 @@ Turn on **live AI** with the Worker setup below.
 ## Publish to your GitHub (one time, ~10 minutes)
 
 1. **Create the repo**: on GitHub (signed in as `MonicaChoudhari`) click **New repository** → name it `portfolio` → Public → *don't* add a README → Create.
-2. **Push this folder as the repo root:**
+2. **Copy this folder out of Nakul's repo and push it as the root of Monica's repo:**
    ```bash
-   cd monica-portfolio
+   cp -r Portfolio/monica-portfolio ~/monica-portfolio   # copy OUTSIDE Nakul's repo
+   cd ~/monica-portfolio
+   rm -rf node_modules dist
    git init -b main
    git add .
    git commit -m "AI-powered portfolio"
