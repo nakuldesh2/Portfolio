@@ -1,0 +1,9 @@
+# Cloudflare Worker that proxies chat requests to Groq.
+# Deploy:  npx wrangler login && npx wrangler secret put GROQ_API_KEY && npx wrangler deploy
+name = "monica-portfolio-chat"
+main = "src/index.js"
+compatibility_date = "2025-06-01"
+
+[vars]
+# Comma-separated origins allowed to call the Worker. Update if the Pages URL changes.
+ALLOWED_ORIGINS = "https://monicachoudhari.github.io,http://localhost:5173,http://localhost:4173"
