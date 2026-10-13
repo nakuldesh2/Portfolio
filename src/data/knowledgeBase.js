@@ -499,7 +499,7 @@ export const knowledgeBase = {
   // Why Different Skills
   whySkillsUsed: {
     java_spring: "Used for production-scale backend services at Amazon and Ostrich. Strong foundation for microservices and distributed systems.",
-    python: "Used for ML/data processing (SmartScanner), data pipelines (FreshPaws), and Lambda functions.",
+    python: "Used for ML/data processing (SmartScanner), data pipelines, and Lambda functions.",
     react: "Built internal dashboards, website modernization, and now this portfolio to demonstrate modern frontend skills.",
     aws: "Core platform at Amazon and Ostrich. Expertise in Lambda, DynamoDB, S3, SQS, SNS, CloudWatch for serverless architecture.",
     ml: "SmartScanner project demonstrates understanding of ML in production - feature engineering, continuous learning, safety boundaries.",

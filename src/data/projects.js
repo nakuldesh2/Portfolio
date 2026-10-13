@@ -275,33 +275,6 @@ export const projects = [
 
     impact: "Faster analytics. Better user experience.",
   },
-
-  {
-    id: "freshpaws",
-    title: "FreshPaws (Learning Project)",
-    company: "Personal Project",
-    badge: "Full-Stack",
-    shortDescription: "End-to-end dog-food subscription platform - learning project",
-
-    highlights: [
-      "Full architecture design",
-      "Data pipeline (Bronze layer)",
-      "Docker Compose infrastructure",
-    ],
-
-    technologies: ["Python", "PostgreSQL", "MinIO", "Pandas", "Docker"],
-
-    challenge: "Build complete system from scratch to learn architecture patterns",
-
-    whatYouLearn: [
-      "End-to-end system design",
-      "Data engineering (ETL/ELT)",
-      "Infrastructure as code",
-      "Incremental feature development",
-    ],
-
-    impact: "Practical learning. Applied real patterns.",
-  },
 ]
 
 export default projects
