@@ -1,0 +1,10 @@
+node_modules
+dist
+.env
+.env.local
+.env.*.local
+.wrangler
+.dev.vars
+.DS_Store
+# The parent repo ignores lockfiles; this project commits its lockfile so CI can use `npm ci`.
+!package-lock.json

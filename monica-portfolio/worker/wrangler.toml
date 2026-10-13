@@ -1,0 +1,15 @@
+# Cloudflare Worker that proxies chat requests to Groq.
+# Deploy:  npx wrangler login && npx wrangler secret put GROQ_API_KEY && npx wrangler deploy
+name = "monica-portfolio-chat"
+main = "src/index.js"
+compatibility_date = "2025-06-01"
+
+# Serve at https://monica-portfolio-chat.<subdomain>.workers.dev; no per-version preview URLs.
+workers_dev = true
+preview_urls = false
+
+[vars]
+# Groq model ID. Check https://console.groq.com/docs/models if Groq retires it.
+MODEL = "openai/gpt-oss-120b"
+# Comma-separated origins allowed to call the Worker. Update if the Pages URL changes.
+ALLOWED_ORIGINS = "https://monicachoudhari.github.io,http://localhost:5173,http://localhost:4173"
