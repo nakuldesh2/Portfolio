@@ -37,30 +37,33 @@ export function retrieveContext(query) {
 
   // Search projects
   knowledgeBase.projects.forEach(project => {
+    const technologies = project.technologies || []
     const similarity = calculateSimilarity(
       query,
-      `${project.name} ${project.summary} ${project.technologies.join(' ')}`
+      `${project.name} ${project.summary} ${technologies.join(' ')}`
     )
     if (similarity > 0.1) {
       results.push({
         type: 'project',
         score: similarity,
-        content: `Project: ${project.name}\nSummary: ${project.summary}\nTechnologies: ${project.technologies.join(', ')}`
+        content: `Project: ${project.name}\nSummary: ${project.summary}\nTechnologies: ${technologies.join(', ')}`
       })
     }
   })
 
   // Search skills
+  // Skill groups store skills in several array fields (languages, services, ...)
   Object.values(knowledgeBase.skills).forEach(skillGroup => {
+    const items = Object.values(skillGroup).filter(Array.isArray).flat()
     const similarity = calculateSimilarity(
       query,
-      `${skillGroup.category} ${skillGroup.items.join(' ')}`
+      `${skillGroup.category} ${items.join(' ')}`
     )
     if (similarity > 0.05) {
       results.push({
         type: 'skill',
         score: similarity,
-        content: `${skillGroup.category}: ${skillGroup.items.join(', ')}`
+        content: `${skillGroup.category}: ${items.join(', ')}`
       })
     }
   })
