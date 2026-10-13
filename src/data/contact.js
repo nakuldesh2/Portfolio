@@ -6,6 +6,8 @@ export const contact = {
   email: 'nakuldeshpande92@gmail.com',
   github: 'https://github.com/nakuldesh2',
   linkedin: null,
+  location: 'Redmond, WA',
+  availability: 'Open to relocation',
 }
 
 export default contact

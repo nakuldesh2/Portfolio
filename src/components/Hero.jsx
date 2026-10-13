@@ -58,7 +58,7 @@ function Hero({ onChatClick }) {
       </div>
 
       {/* Portrait: backdrop recoloured to the page's slate + sky glow so it blends in */}
-      <div className="relative shrink-0 self-start md:self-center">
+      <div className="relative shrink-0 self-start md:self-center flex flex-row md:flex-col items-center gap-4 md:gap-5">
         <div className="absolute -inset-6 rounded-full bg-sky-500/10 blur-3xl" aria-hidden="true" />
         <picture>
           <source srcSet={`${import.meta.env.BASE_URL}portrait.webp`} type="image/webp" />
@@ -70,6 +70,22 @@ function Hero({ onChatClick }) {
             className="relative w-28 h-28 rounded-full md:w-72 md:h-72 lg:w-80 lg:h-80 md:rounded-3xl object-cover ring-1 ring-slate-700/60 shadow-2xl shadow-black/60"
           />
         </picture>
+
+        {/* Location + availability */}
+        <p className="relative flex flex-col md:flex-row md:items-center gap-1 md:gap-2 text-sm text-slate-400">
+          <span className="flex items-center gap-1.5">
+            <svg className="w-4 h-4 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+              <path d="M12 21s-7-6.2-7-11.5a7 7 0 1 1 14 0C19 14.8 12 21 12 21Z" />
+              <circle cx="12" cy="9.5" r="2.5" />
+            </svg>
+            {contact.location}
+          </span>
+          <span className="hidden md:inline text-slate-600">·</span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
+            {contact.availability}
+          </span>
+        </p>
       </div>
       </div>
 

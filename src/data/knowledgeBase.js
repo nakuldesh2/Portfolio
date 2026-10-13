@@ -18,7 +18,7 @@ export const knowledgeBase = {
     title: "Software Engineer - Distributed Systems & AI/ML",
     summary: "Production software engineer with 6+ years of experience building Tier-1 distributed systems at Amazon, financial platforms at Ostrich Software Solutions, and enterprise applications at SM Enterprises. Specialization in backend architecture, AWS cloud systems, AI/ML integration, and production reliability.",
     email: "nakuldeshpande92@gmail.com",
-    location: "India",
+    location: "Redmond, Washington (open to relocation)",
   },
 
   // Work Experience

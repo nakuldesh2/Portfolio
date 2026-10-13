@@ -103,11 +103,11 @@ export function retrieveContext(query, limit = 4) {
 
 // Always-included overview so broad questions ("what's his background?") still get grounded answers
 function getProfileContext() {
-  const { title, summary } = knowledgeBase.professional
+  const { title, summary, location } = knowledgeBase.professional
   const roles = knowledgeBase.experience
     .map(job => `- ${job.role} at ${job.company} (${job.duration}): ${job.focus}. Impact: ${job.impact}`)
     .join('\n')
-  return `${title}\n${summary}\n\nExperience:\n${roles}`
+  return `${title}\nLocation: ${location}\n${summary}\n\nExperience:\n${roles}`
 }
 
 // Build context string for LLM prompt
