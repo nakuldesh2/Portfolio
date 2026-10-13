@@ -6,7 +6,7 @@
 // system prompt, and proxies the streamed response.
 
 import { buildKnowledgeBase } from './knowledge.js'
-import { createRetriever, formatContext, offlineAnswer } from './retriever.js'
+import { createRetriever, formatContext, isFollowUp, offlineAnswer } from './retriever.js'
 
 const CHAT_API_URL = (import.meta.env.VITE_CHAT_API_URL || '').replace(/\/$/, '')
 
@@ -26,9 +26,10 @@ export const isLiveAI = () => Boolean(CHAT_API_URL)
  * @returns {Promise<{mode: 'live'|'offline', sources: Array}>}
  */
 export async function askAssistant({ question, history = [], onToken, signal }) {
-  // Short follow-ups ("tell me more") have few keywords, so borrow the previous question's.
+  // Follow-ups with no keywords of their own ("tell me more") reuse the previous
+  // question. A question that names its own topic is never mixed with the last one.
   const lastUser = [...history].reverse().find((m) => m.role === 'user')?.content || ''
-  const query = question.split(/\s+/).length < 6 && lastUser ? `${question} ${lastUser}` : question
+  const query = isFollowUp(question) && lastUser ? lastUser : question
   const sources = retrieve(query, 4)
 
   if (!CHAT_API_URL) {

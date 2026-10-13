@@ -13,7 +13,9 @@ const STOPWORDS = new Set(
   ('a an and are as at be but by can could did do does for from had has have her hers how i in is it its me ' +
     'my of on or our she so tell than that the their them then there these this those to was we were what when ' +
     'where which who whom why will with would you your about any some more most much did done give show please ' +
-    'monica monica\'s choudhari narendra describe explain talk walk through').split(' '),
+    'monica monica\'s choudhari narendra describe explain talk walk through ' +
+    // Conversational filler that appears in almost every question ("share more about her project").
+    'project projects share detail details info information elaborate know tell me thing things work worked').split(' '),
 )
 
 // Query expansion: interviewers rarely use the exact words on a resume.
@@ -28,10 +30,7 @@ const SYNONYMS = {
   pipeline: ['etl', 'pipelines'],
   warehouse: ['redshift', 'medallion', 'warehousing', 'lakehouse'],
   medallion: ['raw', 'curated', 'warehouse'],
-  cost: ['savings', 'reduction', 'deletion'],
   save: ['cost', 'savings'],
-  delete: ['deletion', 'cleanup', 'cleaning'],
-  cleanup: ['deletion', 'cleaning'],
   incident: ['lse', 'outage', 'on-call', 'recovery'],
   outage: ['incident', 'lse', 'recovery', 'failures'],
   oncall: ['on-call', 'incident', 'lse'],
@@ -73,7 +72,6 @@ const SYNONYMS = {
   intern: ['internship'],
   internship: ['intern'],
   experience: ['role', 'engineer', 'analyst'],
-  biggest: ['17', 'pb', 'billion', 'impact'],
   impact: ['achievements', 'metrics'],
   achievement: ['achievements', 'impact', 'metrics'],
   forecast: ['forecasting', 'statistical'],
@@ -137,12 +135,20 @@ export function createRetriever(chunks, { k1 = 1.4, b = 0.75 } = {}) {
       }
       return { ...d.chunk, score }
     })
-    return scored
-      .filter((c) => c.score > 0)
-      .sort((x, y) => y.score - x.score)
-      .slice(0, topK)
+    const ranked = scored.filter((c) => c.score > 0).sort((x, y) => y.score - x.score)
+    if (!ranked.length || ranked[0].score < MIN_SCORE) return []
+    // Drop weak tail matches: a chunk scoring under 30% of the best one is
+    // usually a coincidental shared word, and it would mislead the LLM.
+    return ranked.filter((c) => c.score >= ranked[0].score * 0.3).slice(0, topK)
   }
 }
+
+// Below this, the best match is a coincidence rather than an answer.
+const MIN_SCORE = 1
+
+// A follow-up like "tell me more" or "why?" has no searchable words of its own,
+// so the caller should search with the previous question instead.
+export const isFollowUp = (question) => tokenize(question).length === 0
 
 // Turn retrieved chunks into the context block sent to the LLM.
 export function formatContext(chunks, maxChars = 6000) {

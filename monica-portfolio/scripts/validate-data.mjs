@@ -88,13 +88,22 @@ const EXPECT = [
   ['How can I contact her?', 'contact'],
   ['What cloud services does she know?', 'skills-Cloud Services'],
   ['React and Angular modernization', 'project-plm-modernization'],
+  ['Explain the spark job recovery', 'project-spark-auto-recovery'],
+  ['What did she do at Wavteq?', 'exp-Wavteq-Software Engineer'],
 ]
+// Questions about things NOT in the profile must retrieve nothing, so the
+// assistant says "I don't have that" instead of answering about something else.
+const EXPECT_NOTHING = ['Share more about the deletion project', 'Tell me about her deletion work', 'What is your favorite food?']
+for (const q of EXPECT_NOTHING) {
+  const got = retrieve(q, 3).map((c) => c.id)
+  if (got.length) err('retrieval', `"${q}" → expected no matches, got [${got.join(', ')}]`)
+}
 for (const [q, expected] of EXPECT) {
   const got = retrieve(q, 3).map((c) => c.id)
   if (!got.includes(expected)) err('retrieval', `"${q}" → expected "${expected}" in top 3, got [${got.join(', ')}]`)
 }
 
-console.log(`Checked ${projects.length} projects and ${EXPECT.length} retrieval cases.`)
+console.log(`Checked ${projects.length} projects and ${EXPECT.length + EXPECT_NOTHING.length} retrieval cases.`)
 if (warnings.length) console.log(`\nWarnings:\n${warnings.join('\n')}`)
 if (errors.length) {
   console.error(`\nErrors:\n${errors.join('\n')}`)
