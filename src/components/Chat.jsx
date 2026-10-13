@@ -93,39 +93,32 @@ function Chat({ onClose }) {
     setInput('')
     setLoading(true)
 
+    // Replace (never mutate) the last message: StrictMode runs updaters twice in dev,
+    // so in-place `+=` would append every chunk twice
+    const updateLast = (getContent) =>
+      setMessages(prev => [
+        ...prev.slice(0, -1),
+        { ...prev[prev.length - 1], content: getContent(prev[prev.length - 1].content) },
+      ])
+
     try {
       // Initialize assistant message that will stream content
-      const assistantMessage = { role: 'assistant', content: '' }
-      setMessages(prev => [...prev, assistantMessage])
+      setMessages(prev => [...prev, { role: 'assistant', content: '' }])
 
       if (isGroqConfigured()) {
         // Use LLM with streaming
         await callGroqAPI(input, (chunk) => {
-          setMessages(prev => {
-            const updated = [...prev]
-            updated[updated.length - 1].content += chunk
-            return updated
-          })
+          updateLast(content => content + chunk)
         })
       } else {
         // Use fallback response
         const response = getFallbackResponse(input)
-        assistantMessage.content = response
-        setMessages(prev => {
-          const updated = [...prev]
-          updated[updated.length - 1] = assistantMessage
-          return updated
-        })
+        updateLast(() => response)
       }
     } catch (error) {
       console.error('Chat error:', error)
       // Show error message
-      setMessages(prev => {
-        const updated = [...prev]
-        updated[updated.length - 1].content =
-          'Sorry, something went wrong. Try again or use fallback responses.'
-        return updated
-      })
+      updateLast(() => 'Sorry, something went wrong. Try again or use fallback responses.')
     }
 
     setLoading(false)
