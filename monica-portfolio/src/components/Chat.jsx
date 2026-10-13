@@ -113,7 +113,7 @@ export default function Chat({ open, setOpen, request }) {
               <div className="font-semibold text-white">Monica's AI Assistant</div>
               <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
                 <span className={`h-1.5 w-1.5 rounded-full ${live ? 'bg-accent-mint' : 'bg-accent-amber'}`} />
-                {live ? 'Live · RAG + Llama 3.3 on Groq' : 'Offline mode · answers from profile search'}
+                {live ? 'Live · RAG + LLM on Groq' : 'Offline mode · answers from profile search'}
               </div>
             </div>
             <button onClick={() => setOpen(false)} className="sim-btn" aria-label="Close assistant">

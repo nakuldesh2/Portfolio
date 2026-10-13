@@ -3,7 +3,7 @@
 Read this once and you can explain every part of the project in an interview.
 
 **The 30-second pitch:**
-> "My portfolio is itself an AI project. It's a React app on GitHub Pages where every project plays as an animated architecture simulation, and an AI assistant answers questions about my background using Retrieval-Augmented Generation. Retrieval is BM25 search in the browser over a knowledge base generated from the same data the page renders. Generation goes through a Cloudflare Worker that keeps the Groq API key secret and streams Llama 3.3's answer back over Server-Sent Events. It costs $0 to run, and CI validates the data on every push."
+> "My portfolio is itself an AI project. It's a React app on GitHub Pages where every project plays as an animated architecture simulation, and an AI assistant answers questions about my background using Retrieval-Augmented Generation. Retrieval is BM25 search in the browser over a knowledge base generated from the same data the page renders. Generation goes through a Cloudflare Worker that keeps the Groq API key secret and streams the open-weight gpt-oss-120b model's answer back over Server-Sent Events. It costs $0 to run, and CI validates the data on every push."
 
 ---
 
@@ -22,7 +22,7 @@ Read this once and you can explain every part of the project in an interview.
                      CORS allowlist · fixed prompt · size caps · rate limit
                                  │
                                  ▼
-                     Groq API: Llama 3.3 70B ──stream (SSE)──► back to browser
+                     Groq API: gpt-oss-120b ──stream (SSE)──► back to browser
 ```
 
 **Why this design?**

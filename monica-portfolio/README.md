@@ -4,7 +4,7 @@ An interactive portfolio for a Software Engineer (backend, data platforms, AI), 
 
 - **Explore** experience, skills, achievements and education
 - **Watch** every project run as an animated, step-by-step architecture simulation
-- **Ask** an AI assistant anything about Monica's background (RAG + Llama 3.3 on Groq)
+- **Ask** an AI assistant anything about Monica's background (RAG + gpt-oss-120b on Groq)
 
 Everything runs on free tiers: GitHub Pages (hosting), GitHub Actions (CI/CD), Cloudflare Workers (AI proxy), Groq (LLM).
 
@@ -81,7 +81,7 @@ The browser must never hold an API key, since anything on GitHub Pages is public
    `VITE_CHAT_API_URL` = the Worker URL (e.g. `https://monica-portfolio-chat.yourname.workers.dev`)
 4. Actions → *Deploy to GitHub Pages* → **Run workflow**.
 
-The chat header changes from "Offline mode" to "Live · RAG + Llama 3.3 on Groq".
+The chat header changes from "Offline mode" to "Live · RAG + LLM on Groq".
 If your Pages URL differs, update `ALLOWED_ORIGINS` in `worker/wrangler.toml` and redeploy the Worker.
 
 ---

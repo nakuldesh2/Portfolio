@@ -20,7 +20,7 @@ export default function Footer() {
           ))}
         </div>
         <p className="mt-10 text-xs text-slate-500">
-          Built with React, Vite & Tailwind · AI assistant powered by RAG + Llama on Groq · Hosted free on GitHub Pages
+          Built with React, Vite & Tailwind · AI assistant powered by RAG + an open LLM (gpt-oss-120b) on Groq · Hosted free on GitHub Pages
         </p>
       </div>
     </footer>

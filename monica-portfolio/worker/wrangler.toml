@@ -9,5 +9,7 @@ workers_dev = true
 preview_urls = false
 
 [vars]
+# Groq model ID. Check https://console.groq.com/docs/models if Groq retires it.
+MODEL = "openai/gpt-oss-120b"
 # Comma-separated origins allowed to call the Worker. Update if the Pages URL changes.
 ALLOWED_ORIGINS = "https://monicachoudhari.github.io,http://localhost:5173,http://localhost:4173"

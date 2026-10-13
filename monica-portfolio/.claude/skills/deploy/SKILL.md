@@ -22,7 +22,7 @@ description: Publish the portfolio to GitHub Pages and deploy or update the Clou
    ```
 3. Check `ALLOWED_ORIGINS` in `worker/wrangler.toml` includes `https://monicachoudhari.github.io`.
 4. GitHub repo → Settings → Secrets and variables → Actions → **Variables** → `VITE_CHAT_API_URL` = the Worker URL.
-5. Re-run the deploy workflow. The chat header should say "Live · RAG + Llama 3.3 on Groq".
+5. Re-run the deploy workflow. The chat header should say "Live · RAG + LLM on Groq". If the Worker logs `model_not_found`, Groq retired the model: update MODEL in `worker/wrangler.toml` and redeploy.
 6. Smoke test: `curl https://<worker-url>/health` → `{"ok":true,...}`
 
 ## Local AI testing

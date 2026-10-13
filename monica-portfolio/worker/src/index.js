@@ -12,7 +12,9 @@
 //
 // Free tier: Cloudflare Workers allows 100k requests/day, and Groq has a free tier.
 
-const MODEL = 'llama-3.3-70b-versatile'
+// Model is a setting (MODEL in wrangler.toml) because Groq retires models:
+// llama-3.3-70b-versatile was shut down on 2026-08-16. Swap it there, no code change.
+const DEFAULT_MODEL = 'openai/gpt-oss-120b'
 const MAX_QUESTION_CHARS = 600
 const MAX_CONTEXT_CHARS = 7000
 const MAX_HISTORY = 6
@@ -61,7 +63,8 @@ export default {
     const allowed = (env.ALLOWED_ORIGINS || '').split(',').map((s) => s.trim()).filter(Boolean)
     const cors = allowed.includes(origin) ? corsHeaders(origin) : null
 
-    if (url.pathname === '/health') return json(200, { ok: true, model: MODEL })
+    const model = env.MODEL || DEFAULT_MODEL
+    if (url.pathname === '/health') return json(200, { ok: true, model })
     if (!cors) return json(403, { error: 'Origin not allowed' })
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors })
     if (request.method !== 'POST' || url.pathname !== '/chat') return json(404, { error: 'Not found' }, cors)
@@ -95,7 +98,9 @@ export default {
     const groq = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: { Authorization: `Bearer ${env.GROQ_API_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: MODEL, messages, stream: true, temperature: 0.3, max_tokens: 600 }),
+      // gpt-oss is a reasoning model: hidden reasoning tokens count toward the
+      // limit, so allow more tokens and keep reasoning effort low for speed.
+      body: JSON.stringify({ model, messages, stream: true, temperature: 0.3, max_tokens: 1200, reasoning_effort: 'low' }),
     })
 
     if (!groq.ok || !groq.body) {

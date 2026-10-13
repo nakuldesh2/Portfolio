@@ -87,7 +87,7 @@ export function buildKnowledgeBase() {
     'portfolio',
     'About this portfolio and chatbot',
     'This portfolio is a React + Vite + Tailwind site hosted free on GitHub Pages. Each project has an animated, step-by-step simulation of its architecture. ' +
-      'The AI assistant uses Retrieval-Augmented Generation (RAG): it searches a knowledge base generated from the portfolio data with BM25 ranking, then sends the top matches to a Llama model on Groq through a Cloudflare Worker that keeps the API key secret and streams the answer back. ' +
+      'The AI assistant uses Retrieval-Augmented Generation (RAG): it searches a knowledge base generated from the portfolio data with BM25 ranking, then sends the top matches to the open-weight gpt-oss-120b model on Groq through a Cloudflare Worker that keeps the API key secret and streams the answer back. ' +
       'If the AI service is unavailable it falls back to answering directly from the retrieved profile text.',
   )
 

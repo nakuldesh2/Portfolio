@@ -3,7 +3,7 @@
 Interactive portfolio for **Monica Narendra Choudhari (Software Engineer: backend, data platforms, AI)**. Hiring managers open the GitHub Pages link and can:
 1. Read her experience, skills, achievements and education
 2. Click any project to watch an **animated, step-by-step simulation** of its architecture
-3. Ask an **AI assistant** (RAG + Llama 3.3 on Groq) anything about her background
+3. Ask an **AI assistant** (RAG + gpt-oss-120b on Groq; model set in worker/wrangler.toml) anything about her background
 
 ## Commands
 ```bash
