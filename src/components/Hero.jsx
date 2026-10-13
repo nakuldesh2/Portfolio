@@ -11,7 +11,9 @@ const stats = [
 // Hero component - who I am, proof in numbers, and how to reach me
 function Hero({ onChatClick }) {
   return (
-    <section id="top" className="pt-20 pb-16 md:pt-28 md:pb-24 animate-fade-in">
+    <section id="top" className="pt-16 pb-16 md:pt-24 md:pb-24 animate-fade-in">
+      <div className="flex flex-col-reverse md:flex-row md:items-center gap-8 md:gap-12">
+      <div className="flex-1 min-w-0">
       <p className="font-mono text-sm text-sky-400 mb-5">Software Engineer · Distributed Systems & AI/ML</p>
 
       <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-50 leading-tight">
@@ -52,6 +54,23 @@ function Hero({ onChatClick }) {
             <MailIcon />
           </a>
         </div>
+      </div>
+      </div>
+
+      {/* Portrait: backdrop recoloured to the page's slate + sky glow so it blends in */}
+      <div className="relative shrink-0 self-start md:self-center">
+        <div className="absolute -inset-6 rounded-full bg-sky-500/10 blur-3xl" aria-hidden="true" />
+        <picture>
+          <source srcSet={`${import.meta.env.BASE_URL}portrait.webp`} type="image/webp" />
+          <img
+            src={`${import.meta.env.BASE_URL}portrait.jpg`}
+            alt="Portrait of Nakul Deshpande"
+            width="640"
+            height="640"
+            className="relative w-28 h-28 rounded-full md:w-72 md:h-72 lg:w-80 lg:h-80 md:rounded-3xl object-cover ring-1 ring-slate-700/60 shadow-2xl shadow-black/60"
+          />
+        </picture>
+      </div>
       </div>
 
       {/* Proof points */}
