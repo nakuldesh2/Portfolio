@@ -45,7 +45,7 @@ export const resume = {
 
   experience: [
     {
-      role: "Software Development Engineer II",
+      role: "Software Engineer",
       company: "Amazon",
       duration: "2+ years",
       highlights: [

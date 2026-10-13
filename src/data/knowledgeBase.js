@@ -26,7 +26,7 @@ export const knowledgeBase = {
     {
       id: "amazon",
       company: "Amazon",
-      role: "Software Development Engineer II",
+      role: "Software Engineer",
       duration: "2+ years",
       focus: "Tier-1 Production Systems, Content Asset Service (CAS)",
       keyResponsibilities: [

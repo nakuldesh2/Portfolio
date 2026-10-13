@@ -22,7 +22,7 @@ function Hero({ onChatClick }) {
       </h1>
 
       <p className="mt-6 text-lg text-slate-300 max-w-2xl leading-relaxed">
-        Software Development Engineer II at Amazon, owning Tier-1 distributed systems — from
+        Software Engineer at Amazon, owning Tier-1 distributed systems — from
         zero-downtime platform migrations and petabyte-scale data cleanup to ML-powered
         automation. Previously built fintech and enterprise backends with Java, Spring and AWS.
       </p>
