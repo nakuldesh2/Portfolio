@@ -13,12 +13,12 @@ function ArchitectureDiagram({ diagram, projectId }) {
   }
 
   return (
-    <div className="mt-6 bg-dark-700 p-6 rounded-lg border border-gray-700">
-      <h3 className="text-cyan-400 font-bold mb-4">System Architecture</h3>
-      <div className="w-full border border-gray-600 rounded bg-dark-800 overflow-auto">
+    <div>
+      <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3">System architecture</h3>
+      <div className="w-full border border-slate-800 rounded-lg bg-slate-950 overflow-auto">
         <img
           src={diagramPath}
-          alt="System Architecture Diagram"
+          alt={`System architecture diagram for ${projectId}`}
           className="w-full h-auto"
         />
       </div>

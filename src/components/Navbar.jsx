@@ -1,29 +1,36 @@
+import { SparkleIcon } from './Icons'
+
+const links = [
+  { href: '#experience', label: 'Experience' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#contact', label: 'Contact' },
+]
+
 // Navbar component - navigation and chat toggle
 function Navbar({ onChatClick }) {
   return (
-    <nav className="sticky top-0 z-50 bg-dark-900 bg-opacity-95 backdrop-blur-sm border-b border-gray-700">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur border-b border-slate-800/80">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo/Name */}
-          <div className="flex items-center">
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              Nakul Deshpande
-            </span>
+          <a href="#top" className="font-semibold text-slate-50 tracking-tight">
+            Nakul Deshpande
+          </a>
+
+          <div className="hidden md:flex gap-8 text-sm">
+            {links.map(link => (
+              <a key={link.href} href={link.href} className="text-slate-400 hover:text-slate-50 transition">
+                {link.label}
+              </a>
+            ))}
           </div>
 
-          {/* Navigation Links */}
-          <div className="hidden md:flex gap-8">
-            <a href="#resume" className="text-gray-300 hover:text-white transition">Skills</a>
-            <a href="#projects" className="text-gray-300 hover:text-white transition">Projects</a>
-          </div>
-
-          {/* Chat Button */}
           <button
             onClick={onChatClick}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition flex items-center gap-2"
+            className="px-3.5 py-2 text-sm font-medium rounded-lg border border-sky-400/40 text-sky-300 hover:bg-sky-400/10 hover:border-sky-400 transition flex items-center gap-2"
           >
-            <span>💬</span>
-            <span>Ask Me</span>
+            <SparkleIcon />
+            <span>Ask my AI</span>
           </button>
         </div>
       </div>

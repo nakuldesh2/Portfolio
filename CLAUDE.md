@@ -121,27 +121,31 @@ UI updates in real-time
 
 ## 🧠 React Components
 
+### Design System
+- **Palette**: Tailwind slate neutrals (bg `slate-950`, surfaces `slate-900`, borders `slate-800`) + one accent (`sky-400`)
+- **Type**: Inter for text, JetBrains Mono for eyebrows/labels/tech tags
+- **Section order**: Hero → Experience → Projects → Skills → Contact (what hiring managers scan for)
+- **Contact links**: `src/data/contact.js` (set `linkedin` to show it everywhere)
+
 ### Navbar (`src/components/Navbar.jsx`)
-- Sticky navigation with logo
-- Chat toggle button
-- Mobile responsive
+- Sticky navigation, section links, "Ask my AI" chat toggle
 
 ### Hero (`src/components/Hero.jsx`)
-- Welcome section with gradient text
-- Key stats (10+ projects, billions of records)
-- CTA buttons
+- Name, role, one-paragraph pitch, CTAs, GitHub/email icons
+- Proof-point stats (2,500+ tenants, 9B records, 35% latency, 6+ yrs)
 
-### Resume (`src/components/Resume.jsx`)
-- Maps through resume.skills data
-- Shows work experience timeline
-- Displays impact metrics with gradients
-- Lists engineering principles
+### Experience (`src/components/Experience.jsx`)
+- Timeline from `resume.experience`
 
 ### Projects (`src/components/Projects.jsx`)
-- Grid of project cards
-- Interactive modal on click
-- Shows challenge + learning outcomes
-- Technology badges
+- Card grid leading with each project's headline result
+- Detail dialog (Esc to close): results, challenge, architecture diagram, takeaways, stack
+
+### Skills (`src/components/Skills.jsx`)
+- Skill chips from `resume.skills` + "How I work" principles
+
+### Footer (`src/components/Footer.jsx`)
+- Contact section (`#contact`) with email/GitHub buttons
 
 ### Chat (`src/components/Chat.jsx`)
 - Real-time streaming message display

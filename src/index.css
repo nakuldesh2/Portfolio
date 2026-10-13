@@ -11,9 +11,21 @@ html, body, #root {
   padding: 0;
 }
 
-/* Smooth scrolling */
+/* Smooth scrolling; offset anchors below the sticky navbar */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+::selection {
+  background: rgb(56 189 248 / 0.3);
+  color: #f8fafc;
+}
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 2px;
 }
 
 /* Custom scrollbar for dark theme */
@@ -22,61 +34,27 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #1f2937;
+  background: #020617;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #4b5563;
+  background: #334155;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6b7280;
+  background: #475569;
 }
 
 /* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out;
-}
-
-/* Architecture Diagram Animations */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes pulse-slow {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
-@keyframes flowData {
-  0% {
-    stroke-dashoffset: 10;
-  }
-  100% {
-    stroke-dashoffset: 0;
   }
 }
 
@@ -84,10 +62,12 @@ html {
   animation: fadeInUp 0.6s ease-out;
 }
 
-.animate-pulse-slow {
-  animation: pulse-slow 3s ease-in-out infinite;
-}
-
-.animate-flow-data {
-  animation: flowData 2s linear infinite;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

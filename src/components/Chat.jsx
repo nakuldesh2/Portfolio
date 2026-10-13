@@ -29,7 +29,7 @@ function Chat({ onClose }) {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: 'Hi! I\'m Nakul\'s AI assistant powered by RAG (Retrieval-Augmented Generation). Ask me anything about his projects, skills, experience, or architectural achievements!',
+      content: 'Hi! I\'m Nakul\'s AI assistant. I answer from his résumé and project notes, so ask about his experience, projects, or skills, e.g. "How did he migrate 2,500 tenants with zero downtime?"',
     },
   ])
   const [input, setInput] = useState('')
@@ -139,7 +139,7 @@ function Chat({ onClose }) {
 
   return (
     <div
-      className="fixed bottom-4 right-4 bg-dark-800 rounded-lg shadow-2xl border border-gray-700 flex flex-col z-40 overflow-hidden"
+      className="fixed bottom-4 right-4 bg-slate-900 rounded-xl shadow-2xl shadow-black/50 border border-slate-800 flex flex-col z-40 overflow-hidden"
       style={{
         width: maximized ? 'calc(100vw - 2rem)' : size.width,
         height: maximized ? 'calc(100vh - 2rem)' : size.height,
@@ -150,30 +150,30 @@ function Chat({ onClose }) {
       {/* Resize handles: top edge, left edge, top-left corner */}
       <div
         onPointerDown={e => startResize(e, { vertical: true })}
-        className="absolute top-0 left-4 right-0 h-1.5 cursor-ns-resize touch-none z-10 hover:bg-blue-500/40"
+        className="absolute top-0 left-4 right-0 h-1.5 cursor-ns-resize touch-none z-10 hover:bg-sky-400/40"
       />
       <div
         onPointerDown={e => startResize(e, { horizontal: true })}
-        className="absolute top-4 left-0 bottom-0 w-1.5 cursor-ew-resize touch-none z-10 hover:bg-blue-500/40"
+        className="absolute top-4 left-0 bottom-0 w-1.5 cursor-ew-resize touch-none z-10 hover:bg-sky-400/40"
       />
       <div
         onPointerDown={e => startResize(e, { horizontal: true, vertical: true })}
         className="absolute top-0 left-0 w-4 h-4 cursor-nwse-resize touch-none z-20 group"
         title="Drag to resize"
       >
-        <div className="absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 border-gray-500 group-hover:border-blue-400" />
+        <div className="absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 border-slate-600 group-hover:border-sky-400" />
       </div>
 
       {/* Header */}
-      <div className="flex justify-between items-center p-4 border-b border-gray-700 bg-dark-900">
+      <div className="flex justify-between items-center p-4 border-b border-slate-800 bg-slate-950">
         <div>
-          <h3 className="font-bold text-white">Ask Me Anything</h3>
-          <p className="text-xs text-gray-400">Powered by RAG + Groq LLM</p>
+          <h3 className="font-semibold text-slate-50">Ask about my experience</h3>
+          <p className="text-xs text-slate-500">AI assistant · RAG over my résumé + Groq LLM</p>
         </div>
         <div className="flex items-center gap-3">
           <button
             onClick={() => setMaximized(m => !m)}
-            className="text-gray-400 hover:text-white transition"
+            className="text-slate-400 hover:text-slate-50 transition"
             title={maximized ? 'Restore size' : 'Maximize'}
             aria-label={maximized ? 'Restore size' : 'Maximize'}
           >
@@ -185,7 +185,7 @@ function Chat({ onClose }) {
           </button>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition text-xl"
+            className="text-slate-400 hover:text-slate-50 transition text-xl"
             aria-label="Close chat"
           >
             ✕
@@ -203,8 +203,8 @@ function Chat({ onClose }) {
             <div
               className={`max-w-[85%] px-4 py-3 rounded-lg ${
                 msg.role === 'user'
-                  ? 'bg-blue-600 text-white rounded-br-none'
-                  : 'bg-dark-700 text-gray-300 rounded-bl-none'
+                  ? 'bg-sky-400 text-slate-950 rounded-br-none'
+                  : 'bg-slate-800 text-slate-200 rounded-bl-none'
               }`}
             >
               {/* Render message with line breaks */}
@@ -218,11 +218,11 @@ function Chat({ onClose }) {
         {/* Loading indicator */}
         {loading && (
           <div className="flex justify-start">
-            <div className="bg-dark-700 text-gray-300 px-4 py-3 rounded-lg rounded-bl-none">
+            <div className="bg-slate-800 text-slate-200 px-4 py-3 rounded-lg rounded-bl-none">
               <div className="flex gap-2">
-                <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce delay-100"></div>
-                <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce delay-200"></div>
+                <div className="w-2 h-2 bg-sky-400 rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-sky-400 rounded-full animate-bounce delay-100"></div>
+                <div className="w-2 h-2 bg-sky-400 rounded-full animate-bounce delay-200"></div>
               </div>
             </div>
           </div>
@@ -232,19 +232,19 @@ function Chat({ onClose }) {
       </div>
 
       {/* Input Area */}
-      <div className="p-4 border-t border-gray-700 bg-dark-900 flex gap-2">
+      <div className="p-4 border-t border-slate-800 bg-slate-950 flex gap-2">
         <textarea
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="Ask about projects, skills, experience..."
-          className="flex-1 bg-dark-700 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none max-h-20"
+          className="flex-1 bg-slate-800 text-slate-50 placeholder-slate-500 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400 resize-none max-h-20"
           rows="1"
         />
         <button
           onClick={handleSend}
           disabled={loading || !input.trim()}
-          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+          className="px-4 py-2 bg-sky-400 hover:bg-sky-300 text-slate-950 font-semibold rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
         >
           {loading ? '⏳' : '→'}
         </button>
@@ -252,7 +252,7 @@ function Chat({ onClose }) {
 
       {/* Info Message */}
       {!isGroqConfigured() && (
-        <div className="px-4 py-2 bg-yellow-900 text-yellow-200 text-xs text-center border-t border-gray-700">
+        <div className="px-4 py-2 bg-yellow-900 text-yellow-200 text-xs text-center border-t border-slate-800">
           Using fallback responses (API key not configured)
         </div>
       )}
