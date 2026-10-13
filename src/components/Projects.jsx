@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { projects } from '../data/projects'
 import { architectures } from '../data/architectures'
 import ArchitectureDiagram from './ArchitectureDiagram'
+import Simulation from './Simulation'
+import { simulations } from '../data/simulations'
 import SectionHeading from './SectionHeading'
 
 function ProjectMeta({ project }) {
@@ -27,7 +29,7 @@ function Projects() {
   return (
     <section id="projects" className="py-20 border-t border-slate-800/80">
       <SectionHeading eyebrow="02 — Projects" title="Selected work">
-        Production systems I designed or led, with the results they delivered. Click any project for the architecture.
+        Production systems I designed or led. Each one opens as a step-by-step simulation of how it works, with the real results.
       </SectionHeading>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -66,7 +68,7 @@ function Projects() {
             </div>
 
             <span className="mt-5 text-sm font-medium text-sky-400 group-hover:text-sky-300">
-              Architecture & details →
+              {simulations[project.id] ? '▶ Watch it run' : 'Architecture & details →'}
             </span>
           </button>
         ))}
@@ -81,7 +83,7 @@ function Projects() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="project-dialog-title"
-            className="bg-slate-900 rounded-xl w-full max-w-5xl border border-slate-800 flex flex-col shadow-2xl"
+            className="bg-slate-900 rounded-xl w-full max-w-6xl border border-slate-800 flex flex-col shadow-2xl"
             onClick={(e) => e.stopPropagation()}
             style={{ maxHeight: '90vh' }}
           >
@@ -104,6 +106,11 @@ function Projects() {
             <div className="p-6 space-y-8 overflow-y-auto flex-1">
               <p className="text-slate-300 leading-relaxed">{selectedProject.shortDescription}</p>
 
+              {/* Interactive simulation (keyed so it restarts per project) */}
+              {simulations[selectedProject.id] && (
+                <Simulation key={selectedProject.id} simulation={simulations[selectedProject.id]} />
+              )}
+
               <div>
                 <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3">Results</h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -122,10 +129,18 @@ function Projects() {
 
               {/* Architecture Diagram */}
               {architectures[selectedProject.id] && (
-                <ArchitectureDiagram
-                  diagram={architectures[selectedProject.id]}
-                  projectId={selectedProject.id}
-                />
+                simulations[selectedProject.id] ? (
+                  <details className="group/diagram">
+                    <summary className="cursor-pointer text-sm font-medium text-slate-400 hover:text-slate-200 select-none">
+                      Show detailed architecture diagram
+                    </summary>
+                    <div className="mt-4">
+                      <ArchitectureDiagram diagram={architectures[selectedProject.id]} projectId={selectedProject.id} />
+                    </div>
+                  </details>
+                ) : (
+                  <ArchitectureDiagram diagram={architectures[selectedProject.id]} projectId={selectedProject.id} />
+                )
               )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

@@ -141,6 +141,13 @@ UI updates in real-time
 - Card grid leading with each project's headline result
 - Detail dialog (Esc to close): results, challenge, architecture diagram, takeaways, stack
 
+### Simulation (`src/components/Simulation.jsx`)
+- Step-by-step animated system walkthrough shown in each project's dialog
+- Pure data: `src/data/simulations.js` (nodes on a 1000x520 canvas, edges, steps with active nodes/flows/metric)
+- SVG `<animateMotion>` packets, autoplay + pause/prev/next, arrow keys, honours reduced motion
+- Edge labels that would cover a node are hidden, so keep labels on longer edges
+- Only use facts from `knowledgeBase.js` / `projects.js` in step text
+
 ### Skills (`src/components/Skills.jsx`)
 - Skill chips from `resume.skills` + "How I work" principles
 

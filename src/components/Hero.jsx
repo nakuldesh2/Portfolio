@@ -30,7 +30,7 @@ function Hero({ onChatClick }) {
           href="#projects"
           className="px-5 py-2.5 rounded-lg bg-sky-400 text-slate-950 font-semibold hover:bg-sky-300 transition"
         >
-          View my work
+          Watch my projects run
         </a>
         <button
           onClick={onChatClick}

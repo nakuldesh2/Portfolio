@@ -71,3 +71,9 @@ html {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Simulation step progress bar */
+@keyframes sim-progress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
