@@ -16,25 +16,26 @@
 
 import { getSystemPrompt, buildPromptContext } from './ragService'
 
-const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY
-const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions'
+// Cloudflare Worker URL that proxies Groq API securely
+const WORKER_URL = import.meta.env.VITE_GROQ_WORKER_URL
 
-// Check if API key is configured
+// Check if Cloudflare Worker is configured
 export function isGroqConfigured() {
-  return !!GROQ_API_KEY
+  return !!WORKER_URL
 }
 
 /**
- * Call Groq API with streaming support
+ * Call Groq API through Cloudflare Worker proxy
  *
- * Why streaming?
+ * Why streaming through a worker?
+ * - API key is stored securely server-side (not in browser)
  * - Better UX: User sees response appearing in real-time
  * - Saves tokens: Only pay for tokens used
  * - Feels more responsive: Don't wait for full response
  */
 export async function callGroqAPI(userQuery, onChunk) {
   if (!isGroqConfigured()) {
-    throw new Error('Groq API key not configured. Set VITE_GROQ_API_KEY in .env')
+    throw new Error('Cloudflare Worker not configured. Set VITE_GROQ_WORKER_URL in .env')
   }
 
   const systemPrompt = getSystemPrompt()
@@ -42,14 +43,12 @@ export async function callGroqAPI(userQuery, onChunk) {
   const fullPrompt = `${contextPrompt}\n\nUser Question: ${userQuery}`
 
   try {
-    const response = await fetch(GROQ_API_URL, {
+    const response = await fetch(WORKER_URL, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${GROQ_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'mixtral-8x7b-32768', // Fast open-source model
         messages: [
           {
             role: 'system',
@@ -60,9 +59,6 @@ export async function callGroqAPI(userQuery, onChunk) {
             content: fullPrompt,
           },
         ],
-        temperature: 0.7, // Balanced: not too rigid, not too random
-        max_tokens: 500, // Keep responses concise
-        stream: true, // Enable streaming for better UX
       }),
     })
 
@@ -115,32 +111,28 @@ export async function callGroqAPI(userQuery, onChunk) {
 }
 
 /**
- * Non-streaming fallback (if streaming fails)
+ * Non-streaming fallback through Cloudflare Worker
  * Sometimes useful for debugging or constrained environments
  */
 export async function callGroqAPISimple(userQuery) {
   if (!isGroqConfigured()) {
-    throw new Error('Groq API key not configured')
+    throw new Error('Cloudflare Worker not configured')
   }
 
   const systemPrompt = getSystemPrompt()
   const contextPrompt = buildPromptContext(userQuery)
   const fullPrompt = `${contextPrompt}\n\nUser Question: ${userQuery}`
 
-  const response = await fetch(GROQ_API_URL, {
+  const response = await fetch(WORKER_URL, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${GROQ_API_KEY}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'mixtral-8x7b-32768',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: fullPrompt },
       ],
-      temperature: 0.7,
-      max_tokens: 500,
     }),
   })
 
