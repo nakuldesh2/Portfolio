@@ -59,9 +59,9 @@ Contains Nakul's complete experience:
 
 **RAG Strategy**:
 1. User asks question
-2. Search KB for relevant content (6 categories)
-3. Return top 3 matches by similarity score
-4. Send context + question to Groq
+2. Search KB documents (one per experience/project/skill group/etc.)
+3. Return top 4 matches by IDF-weighted keyword score
+4. Send profile overview + matches + question to Groq
 5. Generate grounded answer
 
 ### Projects Data (`src/data/projects.js`)
@@ -89,10 +89,10 @@ buildPromptContext(query)        // Build prompt with context
 getSystemPrompt()                // System instructions for LLM
 ```
 
-**Similarity Matching**:
-- Split query and KB text into words
-- Count common words
-- Calculate relevance score
+**Keyword Matching**:
+- Tokenize query and KB docs (stopwords removed, plurals stripped)
+- Score = sum of IDF of matched query terms (title matches count double)
+- Profile overview always included so broad questions stay grounded
 - Production would use vector embeddings
 
 ### Groq Service (`src/services/groqService.js`)

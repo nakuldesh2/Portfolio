@@ -21,113 +21,110 @@
 
 import { knowledgeBase } from '../data/knowledgeBase'
 
-// Simple text similarity function
-// In production, you'd use vector embeddings for better matching
-function calculateSimilarity(text1, text2) {
-  const words1 = text1.toLowerCase().split(/\s+/)
-  const words2 = text2.toLowerCase().split(/\s+/)
+// Words too common to signal relevance
+const STOPWORDS = new Set([
+  'a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'can', 'did', 'do', 'does', 'for',
+  'from', 'has', 'have', 'he', 'his', 'how', 'i', 'in', 'is', 'it', 'me', 'my', 'of',
+  'on', 'or', 'tell', 'that', 'the', 'this', 'to', 'was', 'what', 'when', 'where',
+  'which', 'who', 'why', 'with', 'you', 'your', 'about', 'nakul', 'nakuls',
+  'any', 'some', 'there', 'their', 'give', 'explain', 'describe', 'know', 'work',
+])
 
-  const commonWords = words1.filter(w => words2.includes(w))
-  return commonWords.length / Math.max(words1.length, words2.length)
+// Lowercase, split on non-alphanumerics, drop stopwords, crude plural stemming
+function tokenize(text) {
+  return text
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter(w => w.length > 1 && !STOPWORDS.has(w))
+    .map(w => (w.length > 3 && w.endsWith('s') ? w.slice(0, -1) : w))
 }
 
-// Search knowledge base for relevant information
-export function retrieveContext(query) {
-  const results = []
-
-  // Search projects
-  knowledgeBase.projects.forEach(project => {
-    const technologies = project.technologies || []
-    const similarity = calculateSimilarity(
-      query,
-      `${project.name} ${project.summary} ${technologies.join(' ')}`
-    )
-    if (similarity > 0.1) {
-      results.push({
-        type: 'project',
-        score: similarity,
-        content: `Project: ${project.name}\nSummary: ${project.summary}\nTechnologies: ${technologies.join(', ')}`
+// Render any KB value (string, array, nested object) as readable text
+function toText(value, indent = '') {
+  if (Array.isArray(value)) {
+    return value.map(v => `${indent}- ${toText(v, indent + '  ').trimStart()}`).join('\n')
+  }
+  if (value && typeof value === 'object') {
+    return Object.entries(value)
+      .filter(([key]) => key !== 'id')
+      .map(([key, v]) => {
+        const text = toText(v, indent + '  ')
+        return typeof v === 'object' ? `${indent}${key}:\n${text}` : `${indent}${key}: ${text}`
       })
-    }
-  })
+      .join('\n')
+  }
+  return String(value)
+}
 
-  // Search skills
-  // Skill groups store skills in several array fields (languages, services, ...)
-  Object.values(knowledgeBase.skills).forEach(skillGroup => {
-    const items = Object.values(skillGroup).filter(Array.isArray).flat()
-    const similarity = calculateSimilarity(
-      query,
-      `${skillGroup.category} ${items.join(' ')}`
-    )
-    if (similarity > 0.05) {
-      results.push({
-        type: 'skill',
-        score: similarity,
-        content: `${skillGroup.category}: ${items.join(', ')}`
-      })
-    }
+// Flatten the knowledge base into one document per experience, project, skill group, etc.
+// In production, you'd chunk and embed these with a vector model instead
+function buildDocuments() {
+  const docs = []
+  Object.entries(knowledgeBase).forEach(([section, value]) => {
+    if (section === 'professional') return
+    const entries = Array.isArray(value) ? value.map(item => [section, item]) : Object.entries(value)
+    entries.forEach(([key, item]) => {
+      const title = item.name || item.title || item.company || item.category || item.institution || key.replace(/_/g, ' ')
+      const body = `${title}\n${toText(item)}`
+      // Section label is shown to the LLM but not indexed, so "experience" doesn't match every job
+      docs.push({ text: `[${section}] ${body}`, tokens: new Set(tokenize(body)), titleTokens: new Set(tokenize(title)) })
+    })
   })
+  return docs
+}
 
-  // Search experience
-  knowledgeBase.experience.forEach(job => {
-    const similarity = calculateSimilarity(
-      query,
-      `${job.company} ${job.role} ${job.keyResponsibilities.join(' ')}`
-    )
-    if (similarity > 0.1) {
-      results.push({
-        type: 'experience',
-        score: similarity,
-        content: `${job.role} at ${job.company}\n${job.keyResponsibilities.slice(0, 2).join(', ')}`
-      })
-    }
-  })
+const documents = buildDocuments()
 
-  // Search achievements
-  knowledgeBase.achievements.forEach(achievement => {
-    const similarity = calculateSimilarity(
-      query,
-      `${achievement.title} ${achievement.impact}`
-    )
-    if (similarity > 0.1) {
-      results.push({
-        type: 'achievement',
-        score: similarity,
-        content: `${achievement.title}: ${achievement.impact}`
-      })
-    }
-  })
+// Rare terms (e.g. "SageMaker") matter more than ones that appear everywhere (e.g. "AWS")
+const idf = term => {
+  const df = documents.filter(d => d.tokens.has(term)).length
+  return df === 0 ? 0 : Math.log(documents.length / df) + 1
+}
 
-  // Sort by relevance and return top 3
-  return results
+// Search knowledge base for relevant information (keyword match weighted by IDF)
+export function retrieveContext(query, limit = 4) {
+  const terms = [...new Set(tokenize(query))]
+  if (terms.length === 0) return []
+
+  return documents
+    .map(doc => ({
+      doc,
+      score: terms.reduce((sum, term) => {
+        if (!doc.tokens.has(term)) return sum
+        // Matches in the title (project name, company) count double
+        return sum + idf(term) * (doc.titleTokens.has(term) ? 2 : 1)
+      }, 0),
+    }))
+    .filter(r => r.score > 0)
     .sort((a, b) => b.score - a.score)
-    .slice(0, 3)
-    .map(r => r.content)
+    .slice(0, limit)
+    .map(r => r.doc.text)
+}
+
+// Always-included overview so broad questions ("what's his background?") still get grounded answers
+function getProfileContext() {
+  const { title, summary } = knowledgeBase.professional
+  const roles = knowledgeBase.experience
+    .map(job => `- ${job.role} at ${job.company} (${job.duration}): ${job.focus}. Impact: ${job.impact}`)
+    .join('\n')
+  return `${title}\n${summary}\n\nExperience:\n${roles}`
 }
 
 // Build context string for LLM prompt
 export function buildPromptContext(query) {
   const relevantContext = retrieveContext(query)
 
-  if (relevantContext.length === 0) {
-    return `
-I'm an AI assistant representing Nakul Deshpande's portfolio.
-
-About Nakul:
-- Software engineer with 6+ years of experience
-- Built Tier-1 distributed systems at Amazon
-- Expertise in backend architecture, cloud systems, and AI/ML integration
-- Passionate about production reliability and safe migrations
-    `
-  }
-
   return `
 I'm an AI assistant representing Nakul Deshpande's portfolio.
 
+Profile:
+${getProfileContext()}
+${relevantContext.length > 0 ? `
 Relevant Information:
 ${relevantContext.map((ctx, i) => `${i + 1}. ${ctx}`).join('\n\n')}
-
+` : ''}
 Answer the user's question based on this information about Nakul's experience and projects.
+If the information above doesn't cover the question, say so rather than guessing.
     `
 }
 
