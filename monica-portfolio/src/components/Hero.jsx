@@ -41,7 +41,7 @@ export default function Hero({ onAsk }) {
       </div>
 
       <div className="mt-10">
-        <div className="mb-2 text-xs uppercase tracking-wider text-slate-500">Interviewers often ask</div>
+        <div className="mb-2 text-xs uppercase tracking-wider text-slate-500">Try asking</div>
         <div className="flex flex-wrap gap-2">
           {SUGGESTED.map((q) => (
             <button
