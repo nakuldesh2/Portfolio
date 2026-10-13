@@ -27,6 +27,7 @@ jobs:
         run: npm run build
         env:
           CI: false
+          VITE_GROQ_WORKER_URL: https://groq-api-proxy.nakuldeshpande92.workers.dev
 
       - name: Add .nojekyll to dist
         run: touch ./dist/.nojekyll
