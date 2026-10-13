@@ -139,7 +139,8 @@ UI updates in real-time
 
 ### Projects (`src/components/Projects.jsx`)
 - Card grid leading with each project's headline result
-- Detail dialog (Esc to close): results, challenge, architecture diagram, takeaways, stack
+- Detail dialog (Esc to close, focus-managed, scroll-locked): simulation, results, challenge, optional diagram image (`src/data/diagramPaths.js`), takeaways, stack
+- Diagram images must only contain facts from the knowledge base
 
 ### Simulation (`src/components/Simulation.jsx`)
 - Step-by-step animated system walkthrough shown in each project's dialog
@@ -166,8 +167,8 @@ UI updates in real-time
 
 ### GitHub Actions Workflow (`.github/workflows/deploy.yml`)
 1. Trigger: Push to main branch
-2. Setup: Node 18 + npm cache
-3. Install: `npm ci` (clean install)
+2. Setup: Node 20 + npm cache
+3. Install: `npm ci --legacy-peer-deps` (package-lock.json is committed)
 4. Build: `npm run build` → `dist/`
 5. Deploy: Push to `gh-pages` branch
 
@@ -242,7 +243,7 @@ UI updates in real-time
 
 ```bash
 # Setup
-npm install
+npm ci --legacy-peer-deps
 
 # Development
 npm run dev

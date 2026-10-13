@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nakul Deshpande — Software Engineer, Distributed Systems & AI/ML</title>
     <meta name="description" content="Software engineer with 6+ years building Tier-1 distributed systems at Amazon: zero-downtime migrations, petabyte-scale data processing, and ML-powered automation." />
+    <meta name="author" content="Nakul Deshpande" />
     <meta name="theme-color" content="#020617" />
+    <link rel="canonical" href="https://nakuldesh2.github.io/Portfolio/" />
 
     <!-- Link previews (LinkedIn, Slack, email) -->
     <meta property="og:type" content="website" />
@@ -23,10 +25,34 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" /></noscript>
+
+    <!-- Structured data: helps search engines show a proper profile result -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Nakul Deshpande",
+      "jobTitle": "Software Engineer",
+      "url": "https://nakuldesh2.github.io/Portfolio/",
+      "image": "https://nakuldesh2.github.io/Portfolio/portrait.jpg",
+      "email": "mailto:nakuldeshpande92@gmail.com",
+      "address": { "@type": "PostalAddress", "addressLocality": "Redmond", "addressRegion": "WA", "addressCountry": "US" },
+      "sameAs": ["https://github.com/nakuldesh2"],
+      "knowsAbout": ["Distributed systems", "AWS", "Java", "Spring Boot", "Python", "Machine learning", "Retrieval-augmented generation"]
+    }
+    </script>
 </head>
 <body class="bg-slate-950 text-slate-300 font-sans antialiased">
     <div id="root"></div>
+    <noscript>
+      <p style="padding:2rem;font-family:sans-serif;color:#e2e8f0">
+        Nakul Deshpande — Software Engineer (distributed systems &amp; AI/ML). This site needs JavaScript.
+        Reach me at <a style="color:#38bdf8" href="mailto:nakuldeshpande92@gmail.com">nakuldeshpande92@gmail.com</a>.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>

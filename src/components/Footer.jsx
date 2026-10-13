@@ -44,7 +44,7 @@ function Footer() {
           )}
         </div>
 
-        <div className="mt-16 pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row justify-between gap-2 text-sm text-slate-500">
+        <div className="mt-16 pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row justify-between gap-2 text-sm text-slate-400">
           <p>© {currentYear} Nakul Deshpande</p>
           <p>Built with React, Vite, Tailwind CSS and a RAG chatbot on Groq</p>
         </div>

@@ -21,7 +21,7 @@ function Experience() {
               <h3 className="text-xl font-semibold text-slate-50">
                 {job.role} <span className="text-sky-400">· {job.company}</span>
               </h3>
-              <span className="font-mono text-xs text-slate-500">{job.duration}</span>
+              <span className="font-mono text-xs text-slate-400">{job.duration}</span>
             </div>
             <ul className="mt-4 space-y-2.5">
               {job.highlights.slice(0, 5).map(highlight => (

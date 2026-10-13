@@ -1,27 +1,27 @@
 /**
  * ArchitectureDiagram Component
- * Displays professional architecture diagrams as images
+ * Displays a project's detailed architecture diagram image, if it has one
  */
 
 import { diagramPaths } from '../data/diagramPaths'
 
-function ArchitectureDiagram({ diagram, projectId }) {
-  const diagramPath = projectId ? diagramPaths[projectId] : null
+function ArchitectureDiagram({ projectId, title }) {
+  const diagramPath = diagramPaths[projectId]
 
   if (!diagramPath) {
     return null
   }
 
   return (
-    <div>
-      <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3">System architecture</h3>
-      <div className="w-full border border-slate-800 rounded-lg bg-slate-950 overflow-auto">
+    <div className="w-full border border-slate-800 rounded-lg bg-white overflow-auto">
+      <a href={diagramPath} target="_blank" rel="noreferrer" title="Open full size">
         <img
           src={diagramPath}
-          alt={`System architecture diagram for ${projectId}`}
+          alt={`Detailed architecture diagram: ${title}`}
+          loading="lazy"
           className="w-full h-auto"
         />
-      </div>
+      </a>
     </div>
   )
 }

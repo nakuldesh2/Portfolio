@@ -127,7 +127,7 @@ export const simulations = {
       { id: 'agent', label: 'Bedrock LLM', sub: 'interprets request', kind: 'compute', x: 300, y: 260 },
       { id: 'validator', label: 'Deterministic Checks', sub: 'authoritative', kind: 'check', x: 510, y: 260 },
       { id: 'human', label: 'Human Review', sub: 'high-risk / edge cases', kind: 'consumer', x: 510, y: 440 },
-      { id: 'workflow', label: 'Onboarding Workflow', sub: 'scoped IAM', kind: 'compute', x: 720, y: 260 },
+      { id: 'workflow', label: 'Onboarding Flow', sub: 'scoped IAM', kind: 'compute', x: 720, y: 260 },
       { id: 'config', label: 'Tenant Config', sub: 'DynamoDB', kind: 'storage', x: 900, y: 400 },
       { id: 'slack', label: 'Slack Updates', sub: 'status to requester', kind: 'consumer', x: 900, y: 120 },
     ],
@@ -174,10 +174,10 @@ export const simulations = {
 
   'deletion-handler': {
     nodes: [
-      { id: 'table', label: 'DynamoDB Table', sub: 'production · 9B stale records', kind: 'storage', x: 100, y: 260 },
+      { id: 'table', label: 'DynamoDB Table', sub: '9B stale records', kind: 'storage', x: 100, y: 260 },
       { id: 'lifecycle', label: 'S3 Lifecycle Rules', sub: 'first idea, rejected', kind: 'check', x: 300, y: 90, rejected: true },
       { id: 'export', label: 'DynamoDB Export', sub: 'snapshot to S3', kind: 'compute', x: 300, y: 260 },
-      { id: 'filter', label: 'Filter + Manifest', sub: 'decommissioned types only', kind: 'check', x: 500, y: 260 },
+      { id: 'filter', label: 'Filter + Manifest', sub: 'retired asset types only', kind: 'check', x: 500, y: 260 },
       { id: 'queue', label: 'SQS Work Queue', sub: 'deletion manifest', kind: 'queue', x: 700, y: 260 },
       { id: 'workers', label: 'Lambda Workers', sub: 'bounded concurrency', kind: 'compute', x: 900, y: 260 },
       { id: 'api', label: 'Existing Delete API', sub: 'trusted business logic', kind: 'compute', x: 700, y: 440 },

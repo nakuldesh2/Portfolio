@@ -58,10 +58,10 @@ const edgeKey = (a, b) => `${a}->${b}`
 function labelFits(g, label, nodes) {
   const mx = (g.x1 + g.x2) / 2
   const my = (g.y1 + g.y2) / 2
-  const halfW = label.length * 3.6 + 6
+  const halfW = label.length * 3.9 + 6
   return nodes.every(n =>
     mx + halfW < n.x - NODE_W / 2 - 2 || mx - halfW > n.x + NODE_W / 2 + 2 ||
-    my + 10 < n.y - NODE_H / 2 - 2 || my - 10 > n.y + NODE_H / 2 + 2,
+    my + 11 < n.y - NODE_H / 2 - 2 || my - 11 > n.y + NODE_H / 2 + 2,
   )
 }
 
@@ -160,8 +160,8 @@ function Simulation({ simulation }) {
                 />
                 {edge.label && labelFits(g, edge.label, nodes) && (
                   <g transform={`translate(${(g.x1 + g.x2) / 2}, ${(g.y1 + g.y2) / 2})`}>
-                    <rect x={-edge.label.length * 3.6 - 6} y="-10" width={edge.label.length * 7.2 + 12} height="20" rx="4" fill="#020617" stroke={active ? color : '#1e293b'} />
-                    <text textAnchor="middle" dy="4" fontSize="11" fontFamily="JetBrains Mono, monospace" fill={active ? '#e2e8f0' : '#64748b'}>
+                    <rect x={-edge.label.length * 3.9 - 6} y="-11" width={edge.label.length * 7.8 + 12} height="22" rx="4" fill="#020617" stroke={active ? color : '#1e293b'} />
+                    <text textAnchor="middle" dy="4" fontSize="12" fontFamily="JetBrains Mono, monospace" fill={active ? '#e2e8f0' : '#64748b'}>
                       {edge.label}
                     </text>
                   </g>
@@ -209,11 +209,11 @@ function Simulation({ simulation }) {
                   strokeDasharray={node.rejected ? '5 4' : undefined}
                 />
                 <rect x="0" y="10" width="3" height={NODE_H - 20} rx="1.5" fill={color} />
-                <text x={NODE_W / 2} y={node.sub ? 24 : 33} textAnchor="middle" fontSize="13.5" fontWeight="600" fill={active ? '#f8fafc' : '#94a3b8'} fontFamily="Inter, sans-serif" textDecoration={node.rejected ? 'line-through' : undefined}>
+                <text x={NODE_W / 2} y={node.sub ? 24 : 33} textAnchor="middle" fontSize="14.5" fontWeight="600" fill={active ? '#f8fafc' : '#94a3b8'} fontFamily="Inter, sans-serif" textDecoration={node.rejected ? 'line-through' : undefined}>
                   {node.label}
                 </text>
                 {node.sub && (
-                  <text x={NODE_W / 2} y="41" textAnchor="middle" fontSize="10.5" fill={active ? '#94a3b8' : '#64748b'} fontFamily="Inter, sans-serif">
+                  <text x={NODE_W / 2} y="42" textAnchor="middle" fontSize="11.5" fill={active ? '#94a3b8' : '#64748b'} fontFamily="Inter, sans-serif">
                     {node.sub}
                   </text>
                 )}
@@ -223,12 +223,12 @@ function Simulation({ simulation }) {
         </svg>
         </div>
 
-        <p className="sm:hidden mt-2 px-1 text-xs text-slate-500">← Swipe the diagram to explore →</p>
+        <p className="sm:hidden mt-2 px-1 text-xs text-slate-400">← Swipe the diagram to explore →</p>
 
         {/* Legend */}
         <div className="mt-2 px-1 flex flex-wrap gap-x-4 gap-y-1">
           {usedKinds.map(kind => (
-            <span key={kind} className="flex items-center gap-1.5 text-xs text-slate-500">
+            <span key={kind} className="flex items-center gap-1.5 text-xs text-slate-400">
               <span className="w-2 h-2 rounded-full" style={{ background: KINDS[kind].color }} />
               {KINDS[kind].label}
             </span>

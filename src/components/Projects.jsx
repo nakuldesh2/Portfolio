@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { projects } from '../data/projects'
-import { architectures } from '../data/architectures'
+import { diagramPaths } from '../data/diagramPaths'
 import ArchitectureDiagram from './ArchitectureDiagram'
 import Simulation from './Simulation'
 import { simulations } from '../data/simulations'
@@ -8,7 +8,7 @@ import SectionHeading from './SectionHeading'
 
 function ProjectMeta({ project }) {
   return (
-    <p className="font-mono text-xs text-slate-500">
+    <p className="font-mono text-xs text-slate-400">
       {project.company !== 'Personal Project' && <span>{project.company} · </span>}
       <span className="text-sky-400">{project.badge}</span>
     </p>
@@ -17,14 +17,24 @@ function ProjectMeta({ project }) {
 
 function Projects() {
   const [selectedProject, setSelectedProject] = useState(null)
+  const closeButtonRef = useRef(null)
+  const isOpen = selectedProject !== null
 
-  // Close the details dialog with Escape
+  // While the dialog is open: Escape closes it, the page behind doesn't scroll,
+  // focus moves into the dialog and returns to the card that opened it
   useEffect(() => {
-    if (!selectedProject) return
+    if (!isOpen) return
+    const opener = document.activeElement
     const onKey = (e) => e.key === 'Escape' && setSelectedProject(null)
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [selectedProject])
+    document.body.style.overflow = 'hidden'
+    closeButtonRef.current?.focus()
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+      opener?.focus?.()
+    }
+  }, [isOpen])
 
   return (
     <section id="projects" className="py-20 border-t border-slate-800/80">
@@ -61,7 +71,7 @@ function Projects() {
                 </span>
               ))}
               {project.technologies.length > 4 && (
-                <span className="px-2 py-0.5 rounded font-mono text-xs text-slate-500">
+                <span className="px-2 py-0.5 rounded font-mono text-xs text-slate-400">
                   +{project.technologies.length - 4}
                 </span>
               )}
@@ -95,6 +105,7 @@ function Projects() {
                 </h2>
               </div>
               <button
+                ref={closeButtonRef}
                 onClick={() => setSelectedProject(null)}
                 className="text-slate-400 hover:text-slate-50 text-xl leading-none p-1"
                 aria-label="Close"
@@ -112,7 +123,7 @@ function Projects() {
               )}
 
               <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3">Results</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">Results</h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {selectedProject.highlights.map(highlight => (
                     <li key={highlight} className="p-4 rounded-lg bg-slate-950 border border-slate-800 text-sm font-medium text-slate-200">
@@ -123,29 +134,25 @@ function Projects() {
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-2">Challenge</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-2">Challenge</h3>
                 <p className="text-slate-300 leading-relaxed">{selectedProject.challenge}</p>
               </div>
 
               {/* Architecture Diagram */}
-              {architectures[selectedProject.id] && (
-                simulations[selectedProject.id] ? (
-                  <details className="group/diagram">
-                    <summary className="cursor-pointer text-sm font-medium text-slate-400 hover:text-slate-200 select-none">
-                      Show detailed architecture diagram
-                    </summary>
-                    <div className="mt-4">
-                      <ArchitectureDiagram diagram={architectures[selectedProject.id]} projectId={selectedProject.id} />
-                    </div>
-                  </details>
-                ) : (
-                  <ArchitectureDiagram diagram={architectures[selectedProject.id]} projectId={selectedProject.id} />
-                )
+              {diagramPaths[selectedProject.id] && (
+                <details>
+                  <summary className="cursor-pointer text-sm font-medium text-slate-400 hover:text-slate-200 select-none">
+                    Show detailed architecture diagram
+                  </summary>
+                  <div className="mt-4">
+                    <ArchitectureDiagram projectId={selectedProject.id} title={selectedProject.title} />
+                  </div>
+                </details>
               )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3">Key takeaways</h3>
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">Key takeaways</h3>
                   <ul className="space-y-2">
                     {selectedProject.whatYouLearn.map(item => (
                       <li key={item} className="flex gap-3 text-slate-300">
@@ -156,10 +163,10 @@ function Projects() {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-2">Impact</h3>
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-2">Impact</h3>
                   <p className="text-slate-300 leading-relaxed">{selectedProject.impact}</p>
 
-                  <h3 className="mt-6 text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3">Tech stack</h3>
+                  <h3 className="mt-6 text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">Tech stack</h3>
                   <div className="flex flex-wrap gap-1.5">
                     {selectedProject.technologies.map(tech => (
                       <span key={tech} className="px-2 py-0.5 rounded font-mono text-xs bg-slate-800 text-slate-300">

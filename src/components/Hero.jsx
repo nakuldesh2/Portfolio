@@ -61,12 +61,17 @@ function Hero({ onChatClick }) {
       <div className="relative shrink-0 self-start md:self-center flex flex-row md:flex-col items-center gap-4 md:gap-5">
         <div className="absolute -inset-6 rounded-full bg-sky-500/10 blur-3xl" aria-hidden="true" />
         <picture>
-          <source srcSet={`${import.meta.env.BASE_URL}portrait.webp`} type="image/webp" />
+          <source
+            srcSet={`${import.meta.env.BASE_URL}portrait-320.webp 320w, ${import.meta.env.BASE_URL}portrait.webp 640w`}
+            sizes="(min-width: 1024px) 320px, (min-width: 768px) 288px, 112px"
+            type="image/webp"
+          />
           <img
             src={`${import.meta.env.BASE_URL}portrait.jpg`}
             alt="Portrait of Nakul Deshpande"
             width="640"
             height="640"
+            fetchpriority="high"
             className="relative w-28 h-28 rounded-full md:w-72 md:h-72 lg:w-80 lg:h-80 md:rounded-3xl object-cover ring-1 ring-slate-700/60 shadow-2xl shadow-black/60"
           />
         </picture>
@@ -80,7 +85,7 @@ function Hero({ onChatClick }) {
             </svg>
             {contact.location}
           </span>
-          <span className="hidden md:inline text-slate-600">·</span>
+          <span className="hidden md:inline text-slate-600" aria-hidden="true">·</span>
           <span className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
             {contact.availability}
