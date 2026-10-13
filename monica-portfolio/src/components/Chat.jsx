@@ -78,13 +78,13 @@ export default function Chat({ open, setOpen, request }) {
 
     abortRef.current = new AbortController()
     try {
-      const { mode, sources } = await askAssistant({
+      const { mode, sources, fallbackReason } = await askAssistant({
         question,
         history,
         signal: abortRef.current.signal,
         onToken: (t) => appendToLast((msg) => ({ ...msg, content: msg.content + t, pending: false })),
       })
-      appendToLast((msg) => ({ ...msg, pending: false, mode, sources: sources.map((s) => s.title) }))
+      appendToLast((msg) => ({ ...msg, pending: false, mode, fallbackReason, sources: sources.map((s) => s.title) }))
     } catch (err) {
       if (err.name !== 'AbortError') {
         appendToLast((msg) => ({ ...msg, pending: false, content: 'Sorry, something went wrong. Please try again.' }))
@@ -146,6 +146,9 @@ export default function Chat({ open, setOpen, request }) {
                     <div className="mt-2 border-t border-ink-700 pt-2 text-[10px] text-slate-500">
                       Sources: {m.sources.join(' · ')}
                     </div>
+                  )}
+                  {m.fallbackReason && (
+                    <div className="mt-1 text-[10px] text-accent-amber">Live AI unavailable ({m.fallbackReason}), showing profile excerpts.</div>
                   )}
                 </div>
               </div>

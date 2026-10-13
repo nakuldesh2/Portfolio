@@ -54,7 +54,10 @@ export async function askAssistant({ question, history = [], onToken, signal }) 
         history: history.slice(-6).map((m) => ({ role: m.role, content: m.content.slice(0, 1500) })),
       }),
     })
-    if (!res.ok || !res.body) throw new Error(`Chat API returned ${res.status}`)
+    if (!res.ok || !res.body) {
+      const detail = await res.json().then((j) => j.error).catch(() => '')
+      throw new Error(`AI service returned ${res.status}${detail ? `: ${detail}` : ''}`)
+    }
 
     await readSSE(res.body, (t) => {
       streamed = true
@@ -70,7 +73,8 @@ export async function askAssistant({ question, history = [], onToken, signal }) 
     }
     console.warn('Live AI unavailable, falling back to offline answer:', err)
     onToken(offlineAnswer(question, sources))
-    return { mode: 'offline', sources }
+    // `fallbackReason` is shown under the answer so a broken Worker is obvious, not silent.
+    return { mode: 'offline', sources, fallbackReason: err.message || 'network error' }
   }
 }
 
