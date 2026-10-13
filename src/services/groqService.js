@@ -16,8 +16,9 @@
 
 import { getSystemPrompt, buildPromptContext } from './ragService'
 
-// Cloudflare Worker URL that proxies Groq API securely
-const WORKER_URL = import.meta.env.VITE_GROQ_WORKER_URL
+// Cloudflare Worker URL that proxies Groq API securely.
+// Not a secret (the Groq key lives in the Worker), so default it for local dev; env var can override.
+const WORKER_URL = import.meta.env.VITE_GROQ_WORKER_URL || 'https://groq-api-proxy.nakuldeshpande92.workers.dev'
 
 // Check if Cloudflare Worker is configured
 export function isGroqConfigured() {
