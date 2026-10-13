@@ -4,6 +4,10 @@ name = "monica-portfolio-chat"
 main = "src/index.js"
 compatibility_date = "2025-06-01"
 
+# Serve at https://monica-portfolio-chat.<subdomain>.workers.dev; no per-version preview URLs.
+workers_dev = true
+preview_urls = false
+
 [vars]
 # Comma-separated origins allowed to call the Worker. Update if the Pages URL changes.
 ALLOWED_ORIGINS = "https://monicachoudhari.github.io,http://localhost:5173,http://localhost:4173"
