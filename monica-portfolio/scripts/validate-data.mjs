@@ -79,7 +79,10 @@ const EXPECT = [
   ['What is medallion architecture?', 'project-medallion-lakehouse'],
   ['How did she build the Airflow DAG generator?', 'project-medallion-lakehouse'],
   ['Tell me about the agentic AI and MCP work', 'project-agentic-design-review'],
-  ['How did she reach 98% retrieval accuracy?', 'project-graph-rag'],
+  ['How did she safely delete 19 petabytes of data?', 'project-controlled-deletion'],
+  ['Tell me about the deletion project', 'project-controlled-deletion'],
+  ['SSO and OpenID Connect with Cognito', 'project-partner-onboarding'],
+  ['How did she replace the SFTP workflow?', 'project-partner-onboarding'],
   ['How did she automate Spark out of memory recovery?', 'project-spark-auto-recovery'],
   ['Kafka streaming experience', 'project-kafka-feed-platform'],
   ['IP anonymization CryptoPAN', 'project-cryptopan-anonymization'],
@@ -87,13 +90,12 @@ const EXPECT = [
   ['What did she do at Bosch?', 'exp-Bosch-Backend Engineer'],
   ['How can I contact her?', 'contact'],
   ['What cloud services does she know?', 'skills-Cloud Services'],
-  ['React and Angular modernization', 'project-plm-modernization'],
   ['Explain the spark job recovery', 'project-spark-auto-recovery'],
   ['What did she do at Wavteq?', 'exp-Wavteq-Software Engineer'],
 ]
 // Questions about things NOT in the profile must retrieve nothing, so the
 // assistant says "I don't have that" instead of answering about something else.
-const EXPECT_NOTHING = ['Share more about the deletion project', 'Tell me about her deletion work', 'What is your favorite food?']
+const EXPECT_NOTHING = ['Tell me about her DeepSeek fine-tuning', 'Tell me about her blockchain work', 'What is your favorite food?']
 for (const q of EXPECT_NOTHING) {
   const got = retrieve(q, 3).map((c) => c.id)
   if (got.length) err('retrieval', `"${q}" → expected no matches, got [${got.join(', ')}]`)

@@ -37,7 +37,17 @@ const SYNONYMS = {
   failure: ['error', 'incident', 'recovery'],
   challenging: ['incident', 'lse', 'challenge'],
   hardest: ['incident', 'lse', 'challenge'],
-  security: ['anonymization', 'cryptopan', 'oauth', 'lake', 'formation', 'governance'],
+  security: ['cognito', 'mfa', 'sso', 'anonymization', 'cryptopan', 'oauth'],
+  delete: ['deletion', 'cleanup'],
+  cleanup: ['deletion', 'delete'],
+  cost: ['savings', 'saving', 'deletion'],
+  save: ['savings', 'saving', 'cost'],
+  login: ['sign-in', 'authentication', 'sso', 'cognito'],
+  sso: ['single', 'sign-on', 'cognito', 'oidc'],
+  oidc: ['openid', 'connect', 'cognito', 'sso'],
+  authentication: ['cognito', 'sso', 'mfa', 'oidc'],
+  identity: ['cognito', 'sso', 'oidc', 'authentication'],
+  sftp: ['partner', 'onboarding'],
   agent: ['agentic', 'mcp', 'llm'],
   agentic: ['agent', 'mcp', 'llm'],
   mcp: ['model', 'context', 'protocol', 'agentic'],
@@ -110,7 +120,7 @@ export function createRetriever(chunks, { k1 = 1.4, b = 0.75 } = {}) {
     const tokens = tokenize(`${c.title} ${c.title} ${c.keywords || ''} ${c.text}`)
     const tf = new Map()
     for (const t of tokens) tf.set(t, (tf.get(t) || 0) + 1)
-    return { chunk: c, tf, length: tokens.length }
+    return { chunk: c, tf, length: tokens.length, title: new Set(tokenize(c.title)) }
   })
   const avgLen = docs.reduce((n, d) => n + d.length, 0) / Math.max(docs.length, 1)
   const df = new Map()
@@ -133,6 +143,10 @@ export function createRetriever(chunks, { k1 = 1.4, b = 0.75 } = {}) {
         const weight = original.has(t) ? 1 : 0.5
         score += weight * idf(t) * ((f * (k1 + 1)) / (f + k1 * (1 - b + (b * d.length) / avgLen)))
       }
+      // A word the user typed that appears in the chunk's title ("medallion",
+      // "Kafka") names that chunk directly, so it outranks passing mentions elsewhere.
+      // The bonus is weighted by rarity (IDF), so a distinctive word beats a common one.
+      for (const t of original) if (d.title.has(t)) score += 2 * idf(t)
       return { ...d.chunk, score }
     })
     const ranked = scored.filter((c) => c.score > 0).sort((x, y) => y.score - x.score)

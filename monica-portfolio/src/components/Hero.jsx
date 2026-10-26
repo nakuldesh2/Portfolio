@@ -3,8 +3,8 @@ import { profile } from '../data/profile.js'
 const SUGGESTED = [
   'What did Monica build at AWS?',
   'How did she migrate 22+ datasets to a medallion lakehouse?',
-  'Tell me about her agentic AI and RAG work',
-  'How did she automate Spark job recovery?',
+  'How did she safely delete 19 PB of data?',
+  'Tell me about her agentic AI work',
 ]
 
 export default function Hero({ onAsk }) {
