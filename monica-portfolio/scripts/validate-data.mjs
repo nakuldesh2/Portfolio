@@ -6,7 +6,7 @@
 import { projects } from '../src/data/projects.js'
 import { experience } from '../src/data/profile.js'
 import { buildKnowledgeBase } from '../src/ai/knowledge.js'
-import { createRetriever } from '../src/ai/retriever.js'
+import { createRetriever, formatContext } from '../src/ai/retriever.js'
 
 import { CANVAS, KIND, LABEL_MAX_CHARS, NODE, STATUS } from '../src/lib/simulation.js'
 
@@ -28,6 +28,9 @@ for (const p of projects) {
   for (const f of ['approach', 'impact', 'tech']) {
     if (!Array.isArray(p[f]) || !p[f].length) err(where, `"${f}" must be a non-empty array`)
   }
+  if (p.tradeoffs && (!Array.isArray(p.tradeoffs) || p.tradeoffs.some((t) => typeof t !== 'string' || !t)))
+    err(where, '"tradeoffs" must be an array of non-empty strings')
+  if (p.faq && (!Array.isArray(p.faq) || p.faq.some((f) => !f?.q || !f?.a))) err(where, '"faq" entries need both q and a')
   if (p.reviewed === false) warnings.push(`• ${p.id}: not yet confirmed by Monica (reviewed: false)`)
 
   const sim = p.simulation
@@ -79,7 +82,14 @@ const EXPECT = [
   ['What is medallion architecture?', 'project-medallion-lakehouse'],
   ['How did she build the Airflow DAG generator?', 'project-medallion-lakehouse'],
   ['Tell me about the agentic AI and MCP work', 'project-agentic-design-review'],
-  ['How did she safely delete 19 petabytes of data?', 'project-controlled-deletion'],
+  ['How did she safely delete 17 petabytes of data?', 'project-controlled-deletion'],
+  ['Why did the deletion pipeline use SQS?', 'project-controlled-deletion-design'],
+  ['What were the trade-offs of the DAG generator?', 'project-medallion-lakehouse-design'],
+  ['How does the smart scanner choose a malware scanner?', 'project-smart-scanner'],
+  ['Tell me about the AI onboarding assistant', 'project-onboarding-assistant'],
+  ['Tell me about a time she showed ownership', 'stories'],
+  ['Does SFTP use OIDC tokens?', 'project-partner-onboarding-design'],
+  ['How did she make sure the migrated data was correct?', 'project-medallion-lakehouse'],
   ['Tell me about the deletion project', 'project-controlled-deletion'],
   ['SSO and OpenID Connect with Cognito', 'project-partner-onboarding'],
   ['How did she replace the SFTP workflow?', 'project-partner-onboarding'],
@@ -103,6 +113,11 @@ for (const q of EXPECT_NOTHING) {
 for (const [q, expected] of EXPECT) {
   const got = retrieve(q, 3).map((c) => c.id)
   if (!got.includes(expected)) err('retrieval', `"${q}" → expected "${expected}" in top 3, got [${got.join(', ')}]`)
+}
+
+// Every chunk must fit into the context sent to the LLM, or it can never be used.
+for (const c of buildKnowledgeBase()) {
+  if (formatContext([c]).length === 0) err('knowledge', `chunk "${c.id}" is too long to ever fit in the AI context`)
 }
 
 console.log(`Checked ${projects.length} projects and ${EXPECT.length + EXPECT_NOTHING.length} retrieval cases.`)

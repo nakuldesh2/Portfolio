@@ -15,7 +15,7 @@ const STOPWORDS = new Set(
     'where which who whom why will with would you your about any some more most much did done give show please ' +
     'monica monica\'s choudhari narendra describe explain talk walk through ' +
     // Conversational filler that appears in almost every question ("share more about her project").
-    'project projects share detail details info information elaborate know tell me thing things work worked').split(' '),
+    'project projects share detail details info information elaborate know tell me thing things work worked make makes sure ensure').split(' '),
 )
 
 // Query expansion: interviewers rarely use the exact words on a resume.
@@ -48,6 +48,17 @@ const SYNONYMS = {
   authentication: ['cognito', 'sso', 'mfa', 'oidc'],
   identity: ['cognito', 'sso', 'oidc', 'authentication'],
   sftp: ['partner', 'onboarding'],
+  scanner: ['scanning', 'malware', 'smart'],
+  malware: ['scanner', 'scanning'],
+  onboard: ['onboarding', 'assistant'],
+  queue: ['sqs'],
+  orchestration: ['airflow', 'mwaa', 'dag'],
+  migration: ['migrate', 'cutover', 'medallion'],
+  validation: ['validate', 'parity', 'quality'],
+  correct: ['validation', 'parity', 'quality', 'correctness', 'discrepancies'],
+  accurate: ['validation', 'parity', 'quality'],
+  migrated: ['migration', 'migrate', 'medallion'],
+  ownership: ['owned', 'end-to-end', 'led'],
   agent: ['agentic', 'mcp', 'llm'],
   agentic: ['agent', 'mcp', 'llm'],
   mcp: ['model', 'context', 'protocol', 'agentic'],
@@ -165,11 +176,14 @@ const MIN_SCORE = 1
 export const isFollowUp = (question) => tokenize(question).length === 0
 
 // Turn retrieved chunks into the context block sent to the LLM.
-export function formatContext(chunks, maxChars = 6000) {
+// 6800 stays under the Worker's 7000-character context cap (worker/src/index.js).
+// A chunk that doesn't fit is skipped, not a reason to stop: smaller,
+// lower-ranked chunks after it may still fit.
+export function formatContext(chunks, maxChars = 6800) {
   let out = ''
   for (const c of chunks) {
     const block = `### ${c.title}\n${c.text}\n\n`
-    if (out.length + block.length > maxChars) break
+    if (out.length + block.length > maxChars) continue
     out += block
   }
   return out.trim()

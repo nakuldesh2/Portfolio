@@ -2,8 +2,8 @@ import { profile } from '../data/profile.js'
 
 const SUGGESTED = [
   'What did Monica build at AWS?',
-  'How did she migrate 22+ datasets to a medallion lakehouse?',
-  'How did she safely delete 19 PB of data?',
+  'How did she migrate 24 datasets to a medallion warehouse?',
+  'How did she safely delete 17 PB of data?',
   'Tell me about her agentic AI work',
 ]
 

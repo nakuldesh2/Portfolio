@@ -8,7 +8,7 @@
 // best when each chunk answers one kind of question (e.g. "tell me about the
 // deletion project"), so we create one chunk per role, project, skill group, etc.
 
-import { profile, education, skills, experience, achievements } from '../data/profile.js'
+import { profile, education, skills, experience, achievements, stories } from '../data/profile.js'
 import { projects } from '../data/projects.js'
 
 export function buildKnowledgeBase() {
@@ -74,7 +74,30 @@ export function buildKnowledgeBase() {
       ].join(' '),
       { projectId: p.id },
     )
+    // Design reasoning and interview follow-ups get their own chunk, so "why
+    // SQS?" or "what were the trade-offs?" retrieves focused text, not a wall of it.
+    if (p.tradeoffs?.length || p.faq?.length) {
+      add(
+        `project-${p.id}-design`,
+        `${p.title}: design decisions and Q&A`,
+        [
+          p.tradeoffs?.length ? `Design decisions and trade-offs in ${p.title}: ${p.tradeoffs.join(' ')}` : '',
+          ...(p.faq || []).map((f) => `Q: ${f.q} A: ${f.a}`),
+        ].join(' '),
+        { projectId: p.id, keywords: 'why tradeoff trade-off decision design choose chose alternative' },
+      )
+    }
   }
+
+  add(
+    'stories',
+    'Behavioral interview stories',
+    stories.map((s) => `${s.topic}: ${s.project}. ${s.why}`).join(' '),
+    {
+      keywords:
+        'time when example story behavioral ownership owned conflict challenge mistake proud collaboration dependency automation customer trust learning feedback',
+    },
+  )
 
   add(
     'achievements',

@@ -81,6 +81,37 @@ export default function ProjectModal({ project, onClose, onAsk }) {
               </div>
             </div>
 
+            {project.tradeoffs?.length > 0 && (
+              <div className="mt-6">
+                <h4 className="mb-2 font-semibold text-white">Design decisions & trade-offs</h4>
+                <ul className="space-y-2 text-sm text-slate-300">
+                  {project.tradeoffs.map((t) => (
+                    <li key={t} className="flex gap-2">
+                      <span className="text-accent-amber">◆</span>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {project.faq?.length > 0 && (
+              <div className="mt-6">
+                <h4 className="mb-2 font-semibold text-white">Common questions</h4>
+                <div className="space-y-2">
+                  {project.faq.map((f) => (
+                    <details key={f.q} className="group rounded-xl border border-ink-700 bg-ink-950/60 p-3">
+                      <summary className="cursor-pointer list-none text-sm font-medium text-slate-200 marker:hidden">
+                        <span className="mr-2 text-accent transition group-open:rotate-90">›</span>
+                        {f.q}
+                      </summary>
+                      <p className="mt-2 pl-5 text-sm leading-relaxed text-slate-400">{f.a}</p>
+                    </details>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-accent/30 bg-accent/5 p-4">
               <p className="text-sm text-slate-300">Have a question about this project? The AI assistant knows the details.</p>
               <button onClick={() => onAsk(`Tell me more about the ${project.title} project`)} className="btn-primary px-4 py-2 text-sm">
