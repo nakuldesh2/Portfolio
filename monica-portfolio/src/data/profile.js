@@ -12,7 +12,8 @@ export const profile = {
   location: 'Redmond, WA',
   email: 'monicachoudhari94@gmail.com',
   github: 'https://github.com/MonicaChoudhari',
-  linkedin: '', // TODO(Monica): paste your LinkedIn URL. The link stays hidden while this is empty.
+  linkedin: '',
+  photo: 'profile.jpg', // file in public/; set to '' to hide the photo // TODO(Monica): paste your LinkedIn URL. The link stays hidden while this is empty.
   headline: 'I build backend, data & AI systems that scale.',
   tagline:
     'Backend services, event-driven systems, cloud data platforms, secure identity, and agentic AI: from a 22+ dataset medallion warehouse to a pipeline that safely deleted 19 PB of data.',
