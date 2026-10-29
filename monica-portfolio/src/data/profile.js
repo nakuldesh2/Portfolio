@@ -19,12 +19,6 @@ export const profile = {
     'Backend services, event-driven systems, cloud data platforms, secure identity, and agentic AI: from an end-to-end 24-dataset Medallion migration to a controlled pipeline that removed 17 PB of obsolete data.',
   summary:
     'Software Engineer with mid-senior expertise building scalable backend services, event-driven systems, and cloud data platforms. Led the end-to-end migration of 24 datasets to a medallion-architecture warehouse, removed 17 PB of obsolete data with a controlled deletion pipeline, and built AI features including ML-driven scanner selection, an onboarding assistant and an agentic design-review platform. Experience includes C#/.NET, Python, Kafka, REST APIs, AWS, and observability tooling, with contributions to automated recovery, anomaly alerting, platform reliability, and secure identity integration.',
-  heroStats: [
-    { value: '24', label: 'datasets migrated end to end' },
-    { value: '17 PB', label: 'obsolete S3 data removed' },
-    { value: '~9B', label: 'DynamoDB records cleaned up' },
-    { value: 'C++ → AI', label: 'network systems to agentic AI' },
-  ],
 }
 
 export const education = [

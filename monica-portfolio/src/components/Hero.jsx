@@ -50,16 +50,7 @@ export default function Hero({ onAsk }) {
         )}
       </div>
 
-      <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {profile.heroStats.map((s) => (
-          <div key={s.label} className="card p-4">
-            <div className="gradient-text text-3xl font-bold">{s.value}</div>
-            <div className="mt-1 text-xs text-slate-400">{s.label}</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-10">
+      <div className="mt-12">
         <div className="mb-2 text-xs uppercase tracking-wider text-slate-500">Try asking</div>
         <div className="flex flex-wrap gap-2">
           {SUGGESTED.map((q) => (
