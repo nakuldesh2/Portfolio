@@ -1,0 +1,2 @@
+# Copy to .dev.vars for `npx wrangler dev` (never commit .dev.vars)
+GROQ_API_KEY=gsk_your_key_here

@@ -1,0 +1,69 @@
+import { profile } from '../data/profile.js'
+
+const SUGGESTED = [
+  'What did Monica build at AWS?',
+  'How did she migrate 24 datasets to a medallion warehouse?',
+  'How did she safely delete 17 PB of data?',
+  'Tell me about her agentic AI work',
+]
+
+export default function Hero({ onAsk }) {
+  return (
+    <section id="top" className="section flex min-h-[92vh] flex-col justify-center pt-28">
+      <div className="grid items-center gap-10 md:grid-cols-[1fr_auto]">
+        <div>
+          <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-ink-600 bg-ink-900/80 px-3 py-1 text-xs text-slate-300">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-accent-mint" />
+            {profile.title} · {profile.location}
+          </div>
+          <h1 className="text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl">
+            Hi, I'm <span className="gradient-text">{profile.shortName}</span>.
+            <br />
+            {profile.headline}
+          </h1>
+          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-slate-300">{profile.tagline}</p>
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-slate-400">{profile.summary}</p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a href="#projects" className="btn-primary">
+              ▶ Watch my projects in action
+            </a>
+            <button onClick={() => onAsk()} className="btn-ghost">
+              ✦ Ask my AI assistant
+            </button>
+          </div>
+        </div>
+
+        {profile.photo && (
+          // order-first puts the photo above the text on phones, beside it on wider screens.
+          <div className="order-first mx-auto md:order-last">
+            <div className="rounded-full bg-gradient-to-br from-accent to-accent-violet p-1 shadow-2xl shadow-accent/20">
+              <img
+                src={`${import.meta.env.BASE_URL}${profile.photo}`}
+                alt={profile.name}
+                width="480"
+                height="480"
+                className="h-40 w-40 rounded-full object-cover sm:h-56 sm:w-56 lg:h-72 lg:w-72"
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="mt-12">
+        <div className="mb-2 text-xs uppercase tracking-wider text-slate-500">Try asking</div>
+        <div className="flex flex-wrap gap-2">
+          {SUGGESTED.map((q) => (
+            <button
+              key={q}
+              onClick={() => onAsk(q)}
+              className="rounded-full border border-ink-600 bg-ink-900 px-3 py-1.5 text-sm text-slate-300 transition hover:border-accent hover:text-white"
+            >
+              {q}
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
